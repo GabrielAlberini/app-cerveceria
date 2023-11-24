@@ -23,9 +23,7 @@ Este proyecto es un generador de códigos que incluye diversas validaciones para
 
 5. **Visualización del Código**: Una vez generado, el código aparecerá en la pantalla.
 
-6. **Historial de Generación**: Se muestra un historial de códigos generados, incluyendo el DNI y la hora de generación.
-
-7. **Prevención de Regeneración Rápida**: Si intentas generar otro código con el mismo DNI en menos de 24 horas, recibirás un mensaje de alerta.
+6. **Prevención de Regeneración Rápida**: Si intentas generar otro código con el mismo DNI en menos de 24 horas, recibirás un mensaje de alerta.
 
 ## Requisitos
 
