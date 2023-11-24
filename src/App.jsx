@@ -1,13 +1,15 @@
 // App.js
 import { useState, useEffect } from "react";
-import { AlertMessage } from "./components/Alert/Alert"; // Importamos el nuevo componente
+import { AlertMessage } from "./components/Alert/Alert";
 
 const App = () => {
   const [codigoGenerado, setCodigoGenerado] = useState("");
   const [formulario, setFormulario] = useState({
     nombre: "",
     dni: "",
-    fechaNacimiento: "",
+    diaNacimiento: "",
+    mesNacimiento: "",
+    anoNacimiento: "",
     usuarioInstagram: "",
   });
 
@@ -17,28 +19,27 @@ const App = () => {
   const [alertType, setAlertType] = useState("");
 
   useEffect(() => {
-    // Cargar registros desde localStorage al iniciar
     const storedRegistros = JSON.parse(localStorage.getItem("registros")) || [];
     setRegistros(storedRegistros);
   }, []);
 
-  // Función para mostrar mensajes de alerta
   const showAlertMessage = (message, type) => {
     setAlertMessage(message);
     setAlertType(type);
     setShowAlert(true);
-    setTimeout(() => setShowAlert(false), 5000); // Ocultar después de 5 segundos
+    setTimeout(() => setShowAlert(false), 5000);
   };
 
-  // Función para calcular la edad
   const calcularEdad = () => {
-    const fechaNacimientoDate = new Date(formulario.fechaNacimiento);
+    const { diaNacimiento, mesNacimiento, anoNacimiento } = formulario;
+    const fechaNacimientoDate = new Date(
+      `${anoNacimiento}-${mesNacimiento}-${diaNacimiento}`
+    );
     const edadMilisegundos = Date.now() - fechaNacimientoDate.getTime();
     const edad = new Date(edadMilisegundos).getFullYear() - 1970;
     return edad;
   };
 
-  // Función para generar el código
   const generarCodigo = () => {
     const edad = calcularEdad();
 
@@ -51,7 +52,6 @@ const App = () => {
         horaGeneracion: new Date().toLocaleTimeString(),
       };
 
-      // Actualizar el estado y localStorage con el nuevo registro
       setRegistros([...registros, nuevoRegistro]);
       localStorage.setItem(
         "registros",
@@ -65,18 +65,32 @@ const App = () => {
     }
   };
 
-  // Función para manejar el envío del formulario
   const handleSubmit = (e) => {
     e.preventDefault();
-    const { nombre, dni, fechaNacimiento, usuarioInstagram } = formulario;
+    const {
+      nombre,
+      dni,
+      diaNacimiento,
+      mesNacimiento,
+      anoNacimiento,
+      usuarioInstagram,
+    } = formulario;
 
-    if (!nombre || !dni || !fechaNacimiento || !usuarioInstagram) {
+    if (
+      !nombre ||
+      !dni ||
+      !diaNacimiento ||
+      !mesNacimiento ||
+      !anoNacimiento ||
+      !usuarioInstagram
+    ) {
       showAlertMessage(
         "Por favor, completa todos los campos del formulario.",
         "danger"
       );
       return;
     }
+
     if (dni.length < 7 || dni.length > 8) {
       showAlertMessage("El DNI debe tener entre 7 y 8 números.", "danger");
       return;
@@ -96,12 +110,13 @@ const App = () => {
     setFormulario({
       nombre: "",
       dni: "",
-      fechaNacimiento: "",
+      diaNacimiento: "",
+      mesNacimiento: "",
+      anoNacimiento: "",
       usuarioInstagram: "",
     });
   };
 
-  // Función para manejar cambios en los campos del formulario
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormulario({
@@ -111,12 +126,14 @@ const App = () => {
   };
 
   return (
-    <div className="columns is-centered mt-5">
+    <div className="columns is-centered mt-3 p-5">
       <div className="column is-half">
-        <h1 className="title is-1 has-text-centered">Test Cupón Cervecería</h1>
+        <h1 className="title is-1 has-text-centered is-size-3">
+          Test Cupón Cervecería
+        </h1>
         {showAlert && <AlertMessage message={alertMessage} type={alertType} />}
         <form onSubmit={handleSubmit}>
-          <div className="field">
+          <div className="field mb-2">
             <label className="label">Nombre:</label>
             <div className="control">
               <input
@@ -143,19 +160,6 @@ const App = () => {
           </div>
 
           <div className="field">
-            <label className="label">Fecha de Nacimiento:</label>
-            <div className="control">
-              <input
-                className="input"
-                type="date"
-                name="fechaNacimiento"
-                value={formulario.fechaNacimiento}
-                onChange={handleChange}
-              />
-            </div>
-          </div>
-
-          <div className="field">
             <label className="label">Usuario de Instagram:</label>
             <div className="control">
               <input
@@ -163,6 +167,40 @@ const App = () => {
                 type="text"
                 name="usuarioInstagram"
                 value={formulario.usuarioInstagram}
+                onChange={handleChange}
+              />
+            </div>
+          </div>
+
+          <label className="label">Fecha de Nacimiento:</label>
+          <div className="field is-mobile is-flex">
+            <div className="column is-one-third-mobile">
+              <input
+                className="input"
+                type="number"
+                name="diaNacimiento"
+                placeholder="Día"
+                value={formulario.diaNacimiento}
+                onChange={handleChange}
+              />
+            </div>
+            <div className="column is-one-third-mobile">
+              <input
+                className="input"
+                type="number"
+                name="mesNacimiento"
+                placeholder="Mes (número)"
+                value={formulario.mesNacimiento}
+                onChange={handleChange}
+              />
+            </div>
+            <div className="column is-one-third-mobile">
+              <input
+                className="input"
+                type="number"
+                name="anoNacimiento"
+                placeholder="Año"
+                value={formulario.anoNacimiento}
                 onChange={handleChange}
               />
             </div>
