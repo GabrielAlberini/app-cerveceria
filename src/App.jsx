@@ -1,6 +1,7 @@
 // App.js
 import { useState, useEffect } from "react";
 import { AlertMessage } from "./components/Alert/Alert";
+import "./App.css";
 
 const App = () => {
   const [codigoGenerado, setCodigoGenerado] = useState("");
@@ -174,7 +175,7 @@ const App = () => {
 
           <label className="label">Fecha de Nacimiento:</label>
           <div className="field is-mobile is-flex">
-            <div className="column is-one-third-mobile">
+            <div className="column is-one-third-mobile fecha-input">
               <input
                 className="input"
                 type="number"
@@ -184,7 +185,7 @@ const App = () => {
                 onChange={handleChange}
               />
             </div>
-            <div className="column is-one-third-mobile">
+            <div className="column is-one-third-mobile fecha-input-m">
               <input
                 className="input"
                 type="number"
@@ -194,7 +195,7 @@ const App = () => {
                 onChange={handleChange}
               />
             </div>
-            <div className="column is-one-third-mobile">
+            <div className="column is-one-third-mobile fecha-input">
               <input
                 className="input"
                 type="number"
