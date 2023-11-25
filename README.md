@@ -5,11 +5,16 @@ Este proyecto es un generador de códigos que incluye diversas validaciones para
 ## Características
 
 - **Generación de Códigos**: Permite a los usuarios generar códigos únicos a partir de ciertos criterios.
+
 - **Validaciones de Edad**: Antes de generar un código, el sistema verifica que el usuario sea mayor de 18 años.
 
 - **Validaciones de Formulario**: Se realizan diversas validaciones en el formulario para garantizar que todos los campos estén completos y que los datos ingresados cumplan con ciertos estándares.
 
 - **Prevención de Regeneración Rápida**: El sistema impide que se genere otro código con el mismo DNI en menos de 24 horas.
+
+- **Persistencia de data**: Los datos se guardan en el localhost.
+
+- **Descarga del Código como JPG**: Los usuarios pueden descargar el código generado como un archivo JPG para su conveniencia.
 
 ## Cómo Usar
 
@@ -23,7 +28,9 @@ Este proyecto es un generador de códigos que incluye diversas validaciones para
 
 5. **Visualización del Código**: Una vez generado, el código aparecerá en la pantalla.
 
-6. **Prevención de Regeneración Rápida**: Si intentas generar otro código con el mismo DNI en menos de 24 horas, recibirás un mensaje de alerta.
+6. **Descarga del Código**: Puedes descargar el código generado como un archivo JPG haciendo clic en el botón correspondiente.
+
+7. **Prevención de Regeneración de Código**: Si el propietario del dispositivo ya cuenta con un código, este se mostrará en pantalla hasta que hayan pasado las 24 horas desde la creación del mismo, si no, se mostrará el formulario.
 
 ## Requisitos
 
