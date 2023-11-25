@@ -1,10 +1,11 @@
-// App.js
 import { useState, useEffect } from "react";
 import { AlertMessage } from "./components/Alert/Alert";
 import "./App.css";
 
 const App = () => {
-  const [codigoGenerado, setCodigoGenerado] = useState("");
+  const [codigoGenerado, setCodigoGenerado] = useState(
+    localStorage.getItem("registros") || ""
+  );
   const [formulario, setFormulario] = useState({
     nombre: "",
     dni: "",
@@ -22,7 +23,14 @@ const App = () => {
   useEffect(() => {
     const storedRegistros = JSON.parse(localStorage.getItem("registros")) || [];
     setRegistros(storedRegistros);
+
+    // const existingCode = localStorage.getItem("codigoGenerado");
+    // if (existingCode) {
+    //   setCodigoGenerado(existingCode);
+    // }
   }, []);
+
+  console.log(codigoGenerado);
 
   const showAlertMessage = (message, type) => {
     setAlertMessage(message);
@@ -51,6 +59,7 @@ const App = () => {
       const nuevoRegistro = {
         dni: formulario.dni,
         horaGeneracion: new Date().toLocaleTimeString(),
+        codigoGenerado: nuevoCodigo,
       };
 
       setRegistros([...registros, nuevoRegistro]);
@@ -133,94 +142,94 @@ const App = () => {
           Test Cupón Cervecería
         </h1>
         {showAlert && <AlertMessage message={alertMessage} type={alertType} />}
-        <form onSubmit={handleSubmit}>
-          <div className="field mb-2">
-            <label className="label">Nombre:</label>
-            <div className="control">
-              <input
-                className="input"
-                type="text"
-                name="nombre"
-                value={formulario.nombre}
-                onChange={handleChange}
-              />
-            </div>
-          </div>
-
-          <div className="field">
-            <label className="label">DNI:</label>
-            <div className="control">
-              <input
-                className="input"
-                type="text"
-                name="dni"
-                value={formulario.dni}
-                onChange={handleChange}
-              />
-            </div>
-          </div>
-
-          <div className="field">
-            <label className="label">Usuario de Instagram:</label>
-            <div className="control">
-              <input
-                className="input"
-                type="text"
-                name="usuarioInstagram"
-                value={formulario.usuarioInstagram}
-                onChange={handleChange}
-              />
-            </div>
-          </div>
-
-          <label className="label">Fecha de Nacimiento:</label>
-          <div className="field is-mobile is-flex">
-            <div className="column is-one-third-mobile fecha-input">
-              <input
-                className="input"
-                type="number"
-                name="diaNacimiento"
-                placeholder="Día"
-                value={formulario.diaNacimiento}
-                onChange={handleChange}
-              />
-            </div>
-            <div className="column is-one-third-mobile fecha-input-m">
-              <input
-                className="input"
-                type="number"
-                name="mesNacimiento"
-                placeholder="Mes (número)"
-                value={formulario.mesNacimiento}
-                onChange={handleChange}
-              />
-            </div>
-            <div className="column is-one-third-mobile fecha-input">
-              <input
-                className="input"
-                type="number"
-                name="anoNacimiento"
-                placeholder="Año"
-                value={formulario.anoNacimiento}
-                onChange={handleChange}
-              />
-            </div>
-          </div>
-
-          <div className="field">
-            <div className="control">
-              <button className="button is-primary" type="submit">
-                Generar Código
-              </button>
-            </div>
-          </div>
-        </form>
-
-        {codigoGenerado && (
+        {codigoGenerado ? (
           <div className="mt-4">
             <p className="title is-4">Código Generado:</p>
             <p className="subtitle is-6">{codigoGenerado}</p>
           </div>
+        ) : (
+          <form onSubmit={handleSubmit}>
+            <div className="field mb-2">
+              <label className="label">Nombre:</label>
+              <div className="control">
+                <input
+                  className="input"
+                  type="text"
+                  name="nombre"
+                  value={formulario.nombre}
+                  onChange={handleChange}
+                />
+              </div>
+            </div>
+
+            <div className="field">
+              <label className="label">DNI:</label>
+              <div className="control">
+                <input
+                  className="input"
+                  type="text"
+                  name="dni"
+                  value={formulario.dni}
+                  onChange={handleChange}
+                />
+              </div>
+            </div>
+
+            <div className="field">
+              <label className="label">Usuario de Instagram:</label>
+              <div className="control">
+                <input
+                  className="input"
+                  type="text"
+                  name="usuarioInstagram"
+                  value={formulario.usuarioInstagram}
+                  onChange={handleChange}
+                />
+              </div>
+            </div>
+
+            <label className="label">Fecha de Nacimiento:</label>
+            <div className="field is-mobile is-flex">
+              <div className="column is-one-third-mobile fecha-input">
+                <input
+                  className="input"
+                  type="number"
+                  name="diaNacimiento"
+                  placeholder="Día"
+                  value={formulario.diaNacimiento}
+                  onChange={handleChange}
+                />
+              </div>
+              <div className="column is-one-third-mobile fecha-input-m">
+                <input
+                  className="input"
+                  type="number"
+                  name="mesNacimiento"
+                  placeholder="Mes (número)"
+                  value={formulario.mesNacimiento}
+                  onChange={handleChange}
+                />
+              </div>
+              <div className="column is-one-third-mobile fecha-input">
+                <input
+                  className="input"
+                  type="number"
+                  name="anoNacimiento"
+                  placeholder="Año"
+                  value={formulario.anoNacimiento}
+                  onChange={handleChange}
+                />
+              </div>
+            </div>
+
+            <div className="field">
+              <div className="control">
+                <button className="button is-primary" type="submit">
+                  Generar Código
+                </button>
+              </div>
+            </div>
+          </form>
         )}
       </div>
     </div>

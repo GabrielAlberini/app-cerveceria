@@ -1,8 +1,16 @@
-.fecha-input {
-  padding: 0 !important;
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
-.fecha-input-m {
-  padding-top: 0 !important;
-  padding-bottom: 0 !important;
+.input-custom {
+  margin-left: 10px !important;
+  margin-right: 10px !important;
+}
+
+.cupon {
+  background-color: #ffd700;
+  padding: 20px;
+  border-radius: 10px;
 }
