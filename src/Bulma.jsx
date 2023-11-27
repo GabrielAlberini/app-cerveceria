@@ -3,43 +3,56 @@ import { AlertMessage } from "./components/Alert/Alert";
 import html2canvas from "html2canvas";
 import { saveAs } from "file-saver";
 import "./App.css";
+import { CountdownTimer } from "./components/CountdownTimer/CountdownTimer";
 
 const App = () => {
-  const [codigoGenerado, setCodigoGenerado] = useState("");
-  const [tiempoRestante, setTiempoRestante] = useState(0);
-  const [formulario, setFormulario] = useState({
-    nombre: "",
-    dni: "",
-    diaNacimiento: "",
-    mesNacimiento: "",
-    anoNacimiento: "",
-    usuarioInstagram: "",
-    seleccionBar: "", // Nueva propiedad para almacenar la selección del bar
-  });
+  const getInitialState = () => {
+    const storedUltimoRegistro =
+      JSON.parse(localStorage.getItem("ultimoRegistro")) || {};
+    const storedFechaValidez = localStorage.getItem("fechaValidez") || null;
 
-  const [ultimoRegistro, setUltimoRegistro] = useState({});
+    const tiempoRestante = storedFechaValidez
+      ? Math.floor((new Date(storedFechaValidez).getTime() - Date.now()) / 1000)
+      : 0;
+
+    return {
+      ultimoRegistro: storedUltimoRegistro,
+      tiempoRestante,
+      codigoGenerado: storedUltimoRegistro.codigoGenerado || "",
+      formulario: {
+        nombre: "",
+        dni: "",
+        diaNacimiento: "",
+        mesNacimiento: "",
+        anoNacimiento: "",
+        usuarioInstagram: "",
+        seleccionBar: "",
+      },
+    };
+  };
+
+  const [estado, setEstado] = useState(getInitialState());
   const [showAlert, setShowAlert] = useState(false);
   const [alertMessage, setAlertMessage] = useState("");
   const [alertType, setAlertType] = useState("");
 
   useEffect(() => {
-    const storedUltimoRegistro =
-      JSON.parse(localStorage.getItem("ultimoRegistro")) || {};
-    setUltimoRegistro(storedUltimoRegistro);
+    let intervalId;
 
-    const existingCode = storedUltimoRegistro.codigoGenerado;
-    if (existingCode) {
-      setCodigoGenerado(existingCode);
+    if (estado.tiempoRestante > 0) {
+      intervalId = setInterval(() => {
+        setEstado((prevEstado) => ({
+          ...prevEstado,
+          tiempoRestante: prevEstado.tiempoRestante - 1,
+        }));
+      }, 1000);
+    } else {
+      // Si el tiempoRestante llega a 0, ejecutar eliminarRegistro
+      eliminarRegistro();
     }
 
-    const storedFechaValidez = localStorage.getItem("fechaValidez");
-    if (storedFechaValidez) {
-      const tiempoRestante = Math.floor(
-        (new Date(storedFechaValidez).getTime() - Date.now()) / 1000
-      );
-      setTiempoRestante(tiempoRestante);
-    }
-  }, []);
+    return () => clearInterval(intervalId);
+  }, [estado.tiempoRestante]);
 
   const showAlertMessage = (message, type) => {
     setAlertMessage(message);
@@ -57,7 +70,7 @@ const App = () => {
   };
 
   const calcularEdad = () => {
-    const { diaNacimiento, mesNacimiento, anoNacimiento } = formulario;
+    const { diaNacimiento, mesNacimiento, anoNacimiento } = estado.formulario;
     const fechaNacimientoDate = new Date(
       `${anoNacimiento}-${mesNacimiento}-${diaNacimiento}`
     );
@@ -72,33 +85,39 @@ const App = () => {
     if (edad >= 18) {
       const nuevoCodigo = Math.random().toString(36).substring(7);
       const fechaGeneracion = new Date();
-      setCodigoGenerado(nuevoCodigo);
 
       const nuevoRegistro = {
-        dni: formulario.dni,
-        nombre: formulario.nombre,
-        usuarioInstagram: formulario.usuarioInstagram,
-        diaNacimiento: formulario.diaNacimiento,
-        mesNacimiento: formulario.mesNacimiento,
-        anoNacimiento: formulario.anoNacimiento,
-        seleccionBar: formulario.seleccionBar, // Guarda la selección del bar
+        dni: estado.formulario.dni,
+        nombre: estado.formulario.nombre,
+        usuarioInstagram: estado.formulario.usuarioInstagram,
+        diaNacimiento: estado.formulario.diaNacimiento,
+        mesNacimiento: estado.formulario.mesNacimiento,
+        anoNacimiento: estado.formulario.anoNacimiento,
+        seleccionBar: estado.formulario.seleccionBar,
         horaGeneracion: fechaGeneracion.toLocaleTimeString(),
         codigoGenerado: nuevoCodigo,
       };
 
-      setUltimoRegistro(nuevoRegistro);
+      setEstado((prevEstado) => ({
+        ...prevEstado,
+        codigoGenerado: nuevoCodigo,
+        ultimoRegistro: nuevoRegistro,
+      }));
+
       localStorage.setItem("ultimoRegistro", JSON.stringify(nuevoRegistro));
 
-      // Calculate expiration date (30 seconds from generation)
       const fechaValidez = new Date(fechaGeneracion);
       fechaValidez.setSeconds(fechaValidez.getSeconds() + 30);
       localStorage.setItem("fechaValidez", fechaValidez.toISOString());
 
-      // Set tiempoRestante al número de segundos que debes esperar
       const tiempoRestante = Math.floor(
         (fechaValidez.getTime() - Date.now()) / 1000
       );
-      setTiempoRestante(tiempoRestante);
+
+      setEstado((prevEstado) => ({
+        ...prevEstado,
+        tiempoRestante,
+      }));
     } else {
       showAlertMessage(
         "Debes ser mayor de 18 años para generar un código.",
@@ -110,26 +129,42 @@ const App = () => {
   const eliminarRegistro = () => {
     localStorage.removeItem("fechaValidez");
     localStorage.removeItem("ultimoRegistro");
+
+    setEstado((prevEstado) => ({
+      ...prevEstado,
+      codigoGenerado: "",
+      tiempoRestante: 0,
+      ultimoRegistro: {},
+    }));
   };
 
   useEffect(() => {
-    let intervalId;
+    const storedUltimoRegistro =
+      JSON.parse(localStorage.getItem("ultimoRegistro")) || {};
+    setEstado((prevEstado) => ({
+      ...prevEstado,
+      ultimoRegistro: storedUltimoRegistro,
+    }));
 
-    if (tiempoRestante > 0) {
-      // Inicia un intervalo para decrementar el tiempoRestante cada segundo
-      intervalId = setInterval(() => {
-        setTiempoRestante((prevTiempo) => prevTiempo - 1);
-      }, 1000);
-    } else {
-      // Cuando tiempoRestante llega a 0, restablece codigoGenerado a null
-      setCodigoGenerado("");
-      // Limpia localStorage
-      eliminarRegistro();
+    const existingCode = storedUltimoRegistro.codigoGenerado;
+    if (existingCode) {
+      setEstado((prevEstado) => ({
+        ...prevEstado,
+        codigoGenerado: existingCode,
+      }));
     }
 
-    // Limpia el intervalo cuando el componente se desmonta o cuando tiempoRestante llega a 0
-    return () => clearInterval(intervalId);
-  }, [tiempoRestante]);
+    const storedFechaValidez = localStorage.getItem("fechaValidez");
+    if (storedFechaValidez) {
+      const tiempoRestante = Math.floor(
+        (new Date(storedFechaValidez).getTime() - Date.now()) / 1000
+      );
+      setEstado((prevEstado) => ({
+        ...prevEstado,
+        tiempoRestante,
+      }));
+    }
+  }, []);
 
   const calcularFechaValidez = () => {
     const fechaValidezString = localStorage.getItem("fechaValidez");
@@ -158,7 +193,7 @@ const App = () => {
       anoNacimiento,
       usuarioInstagram,
       seleccionBar,
-    } = formulario;
+    } = estado.formulario;
 
     if (
       !nombre ||
@@ -181,7 +216,7 @@ const App = () => {
       return;
     }
 
-    const existeRegistro = ultimoRegistro.dni === dni;
+    const existeRegistro = estado.ultimoRegistro.dni === dni;
 
     if (existeRegistro) {
       showAlertMessage(
@@ -192,23 +227,29 @@ const App = () => {
     }
 
     generarCodigo();
-    setFormulario({
-      nombre: "",
-      dni: "",
-      diaNacimiento: "",
-      mesNacimiento: "",
-      anoNacimiento: "",
-      usuarioInstagram: "",
-      seleccionBar: "", // Reinicia la selección del bar
-    });
+    setEstado((prevEstado) => ({
+      ...prevEstado,
+      formulario: {
+        nombre: "",
+        dni: "",
+        diaNacimiento: "",
+        mesNacimiento: "",
+        anoNacimiento: "",
+        usuarioInstagram: "",
+        seleccionBar: "",
+      },
+    }));
   };
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormulario({
-      ...formulario,
-      [name]: value,
-    });
+    setEstado((prevEstado) => ({
+      ...prevEstado,
+      formulario: {
+        ...prevEstado.formulario,
+        [name]: value,
+      },
+    }));
   };
 
   return (
@@ -229,30 +270,34 @@ const App = () => {
           {showAlert && (
             <AlertMessage message={alertMessage} type={alertType} />
           )}
-          {codigoGenerado ? (
+          {estado.codigoGenerado ? (
             <article className="mt-4 has-text-centered">
               <div id="cupon" className="cupon">
                 <p className="title is-4 has-text-info">¡Código Generado!</p>
                 <p className="subtitle is-3 has-text-danger">
-                  {codigoGenerado}
+                  {estado.codigoGenerado}
                 </p>
                 <p className="subtitle is-5 has-text-info">
-                  Bar: {ultimoRegistro.seleccionBar || ""}
+                  Bar: {estado.ultimoRegistro.seleccionBar || ""}
                 </p>
                 <div className="additional-info">
                   <p>
-                    <strong>Nombre:</strong> {ultimoRegistro.nombre || ""}
+                    <strong>Nombre:</strong>{" "}
+                    {estado.ultimoRegistro.nombre || ""}
                   </p>
                   <p>
-                    <strong>DNI:</strong> {ultimoRegistro.dni || ""}
+                    <strong>DNI:</strong> {estado.ultimoRegistro.dni || ""}
                   </p>
                   <p>
                     <strong>Instagram:</strong>{" "}
-                    {ultimoRegistro.usuarioInstagram || ""}
+                    {estado.ultimoRegistro.usuarioInstagram || ""}
                   </p>
                   <p>
                     <strong>Fecha de validez:</strong> {calcularFechaValidez()}
                   </p>
+                  {estado.tiempoRestante > 0 && (
+                    <CountdownTimer tiempoRestante={estado.tiempoRestante} />
+                  )}
                 </div>
                 <p className="subtitle is-6 has-text-grey">
                   ¡Muéstrale este código al mozo y disfruta de tu cerveza!
@@ -274,7 +319,7 @@ const App = () => {
                     className="input"
                     type="text"
                     name="nombre"
-                    value={formulario.nombre}
+                    value={estado.formulario.nombre}
                     onChange={handleChange}
                   />
                 </div>
@@ -287,7 +332,7 @@ const App = () => {
                     className="input"
                     type="text"
                     name="dni"
-                    value={formulario.dni}
+                    value={estado.formulario.dni}
                     onChange={handleChange}
                   />
                 </div>
@@ -300,7 +345,7 @@ const App = () => {
                     className="input"
                     type="text"
                     name="usuarioInstagram"
-                    value={formulario.usuarioInstagram}
+                    value={estado.formulario.usuarioInstagram}
                     onChange={handleChange}
                   />
                 </div>
@@ -315,7 +360,7 @@ const App = () => {
                       type="number"
                       name="diaNacimiento"
                       placeholder="Día"
-                      value={formulario.diaNacimiento}
+                      value={estado.formulario.diaNacimiento}
                       onChange={handleChange}
                     />
                   </div>
@@ -325,7 +370,7 @@ const App = () => {
                       type="number"
                       name="mesNacimiento"
                       placeholder="Mes (número)"
-                      value={formulario.mesNacimiento}
+                      value={estado.formulario.mesNacimiento}
                       onChange={handleChange}
                     />
                   </div>
@@ -335,7 +380,7 @@ const App = () => {
                       type="number"
                       name="anoNacimiento"
                       placeholder="Año"
-                      value={formulario.anoNacimiento}
+                      value={estado.formulario.anoNacimiento}
                       onChange={handleChange}
                     />
                   </div>
@@ -348,7 +393,7 @@ const App = () => {
                   <div className="select">
                     <select
                       name="seleccionBar"
-                      value={formulario.seleccionBar}
+                      value={estado.formulario.seleccionBar}
                       onChange={handleChange}
                     >
                       <option value="" disabled>
