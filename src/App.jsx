@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { saveAs } from "file-saver";
 import { LOCAL_STORAGE_KEYS } from "./utils/constans";
-import { handleFetch } from "./utils/handleFetch";
+// import { handleFetch } from "./utils/handleFetch";
 import html2canvas from "html2canvas";
 import { Form } from "./components/Form/Form";
 import { Coupon } from "./components/Cupon/Cupon";
@@ -186,7 +186,7 @@ const App = () => {
         tiempoRestante,
       }));
 
-      await handleFetch(nuevoRegistro);
+      // await handleFetch(nuevoRegistro);
     } else {
       showAlertMessage(
         "Debes ser mayor de 18 años para generar un código.",
