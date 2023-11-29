@@ -1,36 +1,119 @@
 import { useState, useEffect } from "react";
+import { saveAs } from "file-saver";
+import { LOCAL_STORAGE_KEYS } from "./utils/constans";
+import { handleFetch } from "./utils/handleFetch";
+import html2canvas from "html2canvas";
+import { Form } from "./components/Form/Form";
+import { Coupon } from "./components/Cupon/Cupon";
+import { NotificacionDisponibilidad } from "./components/NotificacionDisponibilidad/NotificacionDisponibilidad";
 import { AlertMessage } from "./components/Alert/Alert";
 import "./App.css";
 
 const App = () => {
-  const [codigoGenerado, setCodigoGenerado] = useState(
-    localStorage.getItem("registros") || ""
-  );
-  const [formulario, setFormulario] = useState({
-    nombre: "",
-    dni: "",
-    diaNacimiento: "",
-    mesNacimiento: "",
-    anoNacimiento: "",
-    usuarioInstagram: "",
-  });
+  const getInitialState = () => {
+    const storedUltimoRegistro =
+      JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEYS.ULTIMO_REGISTRO)) ||
+      {};
+    const storedFechaValidez =
+      localStorage.getItem(LOCAL_STORAGE_KEYS.FECHA_VALIDEZ) || null;
 
-  const [registros, setRegistros] = useState([]);
+    const tiempoRestante = storedFechaValidez
+      ? Math.floor((new Date(storedFechaValidez).getTime() - Date.now()) / 1000)
+      : 0;
+
+    return {
+      ultimoRegistro: storedUltimoRegistro,
+      tiempoRestante,
+      codigoGenerado: storedUltimoRegistro.codigoGenerado || "",
+      formulario: {
+        nombre: "",
+        dni: "",
+        codigoValidado: false,
+        diaNacimiento: "",
+        mesNacimiento: "",
+        anoNacimiento: "",
+        correoElectronico: "",
+        seleccionBar: "",
+      },
+    };
+  };
+
+  const [estado, setEstado] = useState(getInitialState());
   const [showAlert, setShowAlert] = useState(false);
   const [alertMessage, setAlertMessage] = useState("");
   const [alertType, setAlertType] = useState("");
+  const [isFormAvailable, setIsFormAvailable] = useState(false);
 
   useEffect(() => {
-    const storedRegistros = JSON.parse(localStorage.getItem("registros")) || [];
-    setRegistros(storedRegistros);
+    const calculateFormAvailability = () => {
+      const now = new Date();
+      const dayOfWeek = now.getDay();
+      const hourOfDay = now.getHours();
 
-    // const existingCode = localStorage.getItem("codigoGenerado");
-    // if (existingCode) {
-    //   setCodigoGenerado(existingCode);
-    // }
+      const isAvailable =
+        dayOfWeek >= 1 && dayOfWeek <= 4 && hourOfDay >= 19 && hourOfDay < 22;
+
+      setIsFormAvailable(isAvailable);
+    };
+
+    calculateFormAvailability();
   }, []);
 
-  console.log(codigoGenerado);
+  useEffect(() => {
+    const updateLocalStorageAndState = () => {
+      const storedUltimoRegistro =
+        JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEYS.ULTIMO_REGISTRO)) ||
+        {};
+      setEstado((prevEstado) => ({
+        ...prevEstado,
+        ultimoRegistro: storedUltimoRegistro,
+      }));
+
+      const existingCode = storedUltimoRegistro.codigoGenerado;
+      if (existingCode) {
+        setEstado((prevEstado) => ({
+          ...prevEstado,
+          codigoGenerado: existingCode,
+        }));
+      }
+
+      const storedFechaValidez = localStorage.getItem(
+        LOCAL_STORAGE_KEYS.FECHA_VALIDEZ
+      );
+      if (storedFechaValidez) {
+        const tiempoRestante = Math.floor(
+          (new Date(storedFechaValidez).getTime() - Date.now()) / 1000
+        );
+        setEstado((prevEstado) => ({
+          ...prevEstado,
+          tiempoRestante,
+        }));
+      }
+    };
+
+    updateLocalStorageAndState();
+  }, []);
+
+  useEffect(() => {
+    const startCountdown = () => {
+      let intervalId;
+
+      if (estado.tiempoRestante > 0) {
+        intervalId = setInterval(() => {
+          setEstado((prevEstado) => ({
+            ...prevEstado,
+            tiempoRestante: prevEstado.tiempoRestante - 1,
+          }));
+        }, 1000);
+      } else {
+        eliminarRegistro();
+      }
+
+      return () => clearInterval(intervalId);
+    };
+
+    startCountdown();
+  }, [estado.tiempoRestante]);
 
   const showAlertMessage = (message, type) => {
     setAlertMessage(message);
@@ -39,8 +122,16 @@ const App = () => {
     setTimeout(() => setShowAlert(false), 5000);
   };
 
+  const handleDownload = async () => {
+    const target = document.getElementById("cupon");
+    const canvas = await html2canvas(target);
+    canvas.toBlob((blob) => {
+      saveAs(blob, "codigo_generado.jpg");
+    });
+  };
+
   const calcularEdad = () => {
-    const { diaNacimiento, mesNacimiento, anoNacimiento } = formulario;
+    const { diaNacimiento, mesNacimiento, anoNacimiento } = estado.formulario;
     const fechaNacimientoDate = new Date(
       `${anoNacimiento}-${mesNacimiento}-${diaNacimiento}`
     );
@@ -49,30 +140,90 @@ const App = () => {
     return edad;
   };
 
-  const generarCodigo = () => {
+  const generarCodigo = async () => {
     const edad = calcularEdad();
 
     if (edad >= 18) {
       const nuevoCodigo = Math.random().toString(36).substring(7);
-      setCodigoGenerado(nuevoCodigo);
+      const fechaGeneracion = new Date();
 
       const nuevoRegistro = {
-        dni: formulario.dni,
-        horaGeneracion: new Date().toLocaleTimeString(),
+        dni: estado.formulario.dni,
+        nombre: estado.formulario.nombre,
+        correoElectronico: estado.formulario.correoElectronico,
+        diaNacimiento: estado.formulario.diaNacimiento,
+        mesNacimiento: estado.formulario.mesNacimiento,
+        anoNacimiento: estado.formulario.anoNacimiento,
+        seleccionBar: estado.formulario.seleccionBar,
+        horaGeneracion: fechaGeneracion.toLocaleTimeString(),
         codigoGenerado: nuevoCodigo,
       };
 
-      setRegistros([...registros, nuevoRegistro]);
+      setEstado((prevEstado) => ({
+        ...prevEstado,
+        codigoGenerado: nuevoCodigo,
+        ultimoRegistro: nuevoRegistro,
+      }));
+
       localStorage.setItem(
-        "registros",
-        JSON.stringify([...registros, nuevoRegistro])
+        LOCAL_STORAGE_KEYS.ULTIMO_REGISTRO,
+        JSON.stringify(nuevoRegistro)
       );
+
+      const fechaValidez = new Date(fechaGeneracion);
+      fechaValidez.setSeconds(fechaValidez.getSeconds() + 30);
+      localStorage.setItem(
+        LOCAL_STORAGE_KEYS.FECHA_VALIDEZ,
+        fechaValidez.toISOString()
+      );
+
+      const tiempoRestante = Math.floor(
+        (fechaValidez.getTime() - Date.now()) / 1000
+      );
+
+      setEstado((prevEstado) => ({
+        ...prevEstado,
+        tiempoRestante,
+      }));
+
+      await handleFetch(nuevoRegistro);
     } else {
       showAlertMessage(
         "Debes ser mayor de 18 años para generar un código.",
         "danger"
       );
     }
+  };
+
+  const eliminarRegistro = () => {
+    localStorage.removeItem(LOCAL_STORAGE_KEYS.FECHA_VALIDEZ);
+    localStorage.removeItem(LOCAL_STORAGE_KEYS.ULTIMO_REGISTRO);
+
+    setEstado((prevEstado) => ({
+      ...prevEstado,
+      codigoGenerado: "",
+      tiempoRestante: 0,
+      ultimoRegistro: {},
+    }));
+  };
+
+  const calcularFechaValidez = () => {
+    const fechaValidezString = localStorage.getItem(
+      LOCAL_STORAGE_KEYS.FECHA_VALIDEZ
+    );
+    if (!fechaValidezString) {
+      return "Fecha de validez no disponible";
+    }
+
+    const fechaValidez = new Date(fechaValidezString);
+    const options = {
+      year: "numeric",
+      month: "long",
+      day: "numeric",
+      hour: "numeric",
+      minute: "numeric",
+    };
+    return fechaValidez.toLocaleDateString("es-ES", options);
   };
 
   const handleSubmit = (e) => {
@@ -83,8 +234,9 @@ const App = () => {
       diaNacimiento,
       mesNacimiento,
       anoNacimiento,
-      usuarioInstagram,
-    } = formulario;
+      correoElectronico,
+      seleccionBar,
+    } = estado.formulario;
 
     if (
       !nombre ||
@@ -92,7 +244,8 @@ const App = () => {
       !diaNacimiento ||
       !mesNacimiento ||
       !anoNacimiento ||
-      !usuarioInstagram
+      !correoElectronico ||
+      !seleccionBar
     ) {
       showAlertMessage(
         "Por favor, completa todos los campos del formulario.",
@@ -106,7 +259,7 @@ const App = () => {
       return;
     }
 
-    const existeRegistro = registros.some((registro) => registro.dni === dni);
+    const existeRegistro = estado.ultimoRegistro.dni === dni;
 
     if (existeRegistro) {
       showAlertMessage(
@@ -117,120 +270,85 @@ const App = () => {
     }
 
     generarCodigo();
-    setFormulario({
-      nombre: "",
-      dni: "",
-      diaNacimiento: "",
-      mesNacimiento: "",
-      anoNacimiento: "",
-      usuarioInstagram: "",
-    });
+    setEstado((prevEstado) => ({
+      ...prevEstado,
+      formulario: {
+        nombre: "",
+        dni: "",
+        diaNacimiento: "",
+        mesNacimiento: "",
+        anoNacimiento: "",
+        correoElectronico: "",
+        seleccionBar: "",
+      },
+    }));
   };
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormulario({
-      ...formulario,
-      [name]: value,
-    });
+    setEstado((prevEstado) => ({
+      ...prevEstado,
+      formulario: {
+        ...prevEstado.formulario,
+        [name]: value,
+      },
+    }));
+  };
+
+  const handleCodigoValidado = () => {
+    const registroActualizado = {
+      ...estado.ultimoRegistro,
+      codigoValidado: true,
+    };
+
+    setEstado((prevEstado) => ({
+      ...prevEstado,
+      ultimoRegistro: registroActualizado,
+    }));
+
+    localStorage.setItem(
+      LOCAL_STORAGE_KEYS.ULTIMO_REGISTRO,
+      JSON.stringify(registroActualizado)
+    );
   };
 
   return (
-    <div className="columns is-centered mt-3 p-5">
-      <div className="column is-half">
-        <h1 className="title is-1 has-text-centered is-size-3">
-          Test Cupón Cervecería
-        </h1>
-        {showAlert && <AlertMessage message={alertMessage} type={alertType} />}
-        {codigoGenerado ? (
-          <div className="mt-4">
-            <p className="title is-4">Código Generado:</p>
-            <p className="subtitle is-6">{codigoGenerado}</p>
-          </div>
-        ) : (
-          <form onSubmit={handleSubmit}>
-            <div className="field mb-2">
-              <label className="label">Nombre:</label>
-              <div className="control">
-                <input
-                  className="input"
-                  type="text"
-                  name="nombre"
-                  value={formulario.nombre}
-                  onChange={handleChange}
-                />
-              </div>
-            </div>
-
-            <div className="field">
-              <label className="label">DNI:</label>
-              <div className="control">
-                <input
-                  className="input"
-                  type="text"
-                  name="dni"
-                  value={formulario.dni}
-                  onChange={handleChange}
-                />
-              </div>
-            </div>
-
-            <div className="field">
-              <label className="label">Usuario de Instagram:</label>
-              <div className="control">
-                <input
-                  className="input"
-                  type="text"
-                  name="usuarioInstagram"
-                  value={formulario.usuarioInstagram}
-                  onChange={handleChange}
-                />
-              </div>
-            </div>
-
-            <label className="label">Fecha de Nacimiento:</label>
-            <div className="field is-mobile is-flex">
-              <div className="column is-one-third-mobile fecha-input">
-                <input
-                  className="input"
-                  type="number"
-                  name="diaNacimiento"
-                  placeholder="Día"
-                  value={formulario.diaNacimiento}
-                  onChange={handleChange}
-                />
-              </div>
-              <div className="column is-one-third-mobile fecha-input-m">
-                <input
-                  className="input"
-                  type="number"
-                  name="mesNacimiento"
-                  placeholder="Mes (número)"
-                  value={formulario.mesNacimiento}
-                  onChange={handleChange}
-                />
-              </div>
-              <div className="column is-one-third-mobile fecha-input">
-                <input
-                  className="input"
-                  type="number"
-                  name="anoNacimiento"
-                  placeholder="Año"
-                  value={formulario.anoNacimiento}
-                  onChange={handleChange}
-                />
-              </div>
-            </div>
-
-            <div className="field">
-              <div className="control">
-                <button className="button is-primary" type="submit">
-                  Generar Código
-                </button>
-              </div>
-            </div>
-          </form>
-        )}
+    <div
+      className="columns is-centered p-5"
+      style={{
+        backgroundImage: 'url("bg.jpg")',
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+        minHeight: "100vh",
+      }}
+    >
+      <div className="column is-half is-flex is-justify-content-center">
+        <div className="box has-background-white-bis has-shadow p-5">
+          <h1 className="title is-1 has-text-centered is-size-3 mb-4">
+            Test Cupón Cervecería
+          </h1>
+          {showAlert && (
+            <AlertMessage message={alertMessage} type={alertType} />
+          )}
+          {isFormAvailable ? (
+            estado.codigoGenerado ? (
+              <Coupon
+                estado={estado}
+                handleDownload={handleDownload}
+                handleCodigoValidado={handleCodigoValidado}
+                calcularFechaValidez={calcularFechaValidez}
+              />
+            ) : (
+              <Form
+                estado={estado}
+                handleChange={handleChange}
+                handleSubmit={handleSubmit}
+              />
+            )
+          ) : (
+            <NotificacionDisponibilidad />
+          )}
+        </div>
       </div>
     </div>
   );
