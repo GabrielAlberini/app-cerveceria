@@ -237,6 +237,171 @@ export const Laws = () => {
             Autónoma de Buenos Aires.
           </p>
         </div>
+        <article className="table-container mt-4  mb-5">
+          <h2 className="num-law">Tabla de Puntos de Venta Adheridos</h2>
+          <table className="table">
+            <thead>
+              <tr>
+                <th>PUNTO DE VENTA ADHERIDO</th>
+                <th>N° CUENTA</th>
+                <th>DIRECCION</th>
+                <th>NOMBRE FANTASIA</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>MITOS</td>
+                <td>4607291</td>
+                <td>SARMIENTO 3683</td>
+                <td>MITOS</td>
+              </tr>
+              <tr>
+                <td>DIVA</td>
+                <td>4608397</td>
+                <td>ALVEAR 3489</td>
+                <td>DIVA</td>
+              </tr>
+              <tr>
+                <td>REPUBLICA BAR DE BARRIO</td>
+                <td>4607669</td>
+                <td>LAS HERAS 3701</td>
+                <td>REPUBLICA</td>
+              </tr>
+              <tr>
+                <td>DON MARCOS</td>
+                <td>4607725</td>
+                <td>CASTELLANOS 2120</td>
+                <td>DON MARCOS</td>
+              </tr>
+              <tr>
+                <td>PRIMOS</td>
+                <td>4606777</td>
+                <td>GRAL LOPEZ 2614</td>
+                <td>PRIMOS</td>
+              </tr>
+              <tr>
+                <td>AGORA CAMPO</td>
+                <td>4607263</td>
+                <td>AU ROSA/SFE KM 5.5</td>
+                <td>AGORA</td>
+              </tr>
+              <tr>
+                <td>LO DE NESTOR</td>
+                <td>4606486</td>
+                <td>GRAL PAZ 6304</td>
+                <td>LO DE NESTOR</td>
+              </tr>
+              <tr>
+                <td>BIZARRO</td>
+                <td>-</td>
+                <td>7 DE MARZO Y MACIAS</td>
+                <td>-</td>
+              </tr>
+              <tr>
+                <td>EL PALACIO DE DOÑA RAFAELA</td>
+                <td>4608136</td>
+                <td>A DEL VALLE 6729</td>
+                <td>EL PALACIO DE DOÑA RAFAELA</td>
+              </tr>
+              <tr>
+                <td>EL CLASICO BOWLING</td>
+                <td>4608920</td>
+                <td>HIP IRIGOYEN 3179</td>
+                <td>EL CLASICO</td>
+              </tr>
+              <tr>
+                <td>BAR LA AMISTAD</td>
+                <td>4605389</td>
+                <td>AV PEÑALOZA 5078</td>
+                <td>BAR LA AMISTAD</td>
+              </tr>
+              <tr>
+                <td>SAY MON</td>
+                <td>-</td>
+                <td>GRAL PAZ 5785</td>
+                <td>SAY MON</td>
+              </tr>
+              <tr>
+                <td>CLUB INDEPENDIENTE</td>
+                <td>4607317</td>
+                <td>ZAVALLA 2860</td>
+                <td>SAY NOMORE</td>
+              </tr>
+              <tr>
+                <td>CORTADA FALUCHO</td>
+                <td>4607333</td>
+                <td>SAN MARTIN 2360</td>
+                <td>SAY NOMORE</td>
+              </tr>
+              <tr>
+                <td>DOLCE VATITA</td>
+                <td>4607854</td>
+                <td>7 DE MARZO 1599</td>
+                <td>DOLCE VATITA</td>
+              </tr>
+              <tr>
+                <td>RESTAURANT ESPAÑA</td>
+                <td>4603936</td>
+                <td>SAN MARTIN 2651</td>
+                <td>RESTAURANT ESPAÑA</td>
+              </tr>
+              <tr>
+                <td>ALMACEN ALBERDI</td>
+                <td>4608839</td>
+                <td>BELGRANO 3660</td>
+                <td>ALMACEN ALBERDI</td>
+              </tr>
+              <tr>
+                <td>PATIO CERVECERIA</td>
+                <td>4608062</td>
+                <td>CALCHINES 1398</td>
+                <td>PATIO CERVECERIA</td>
+              </tr>
+              <tr>
+                <td>ZULMA ALE</td>
+                <td>4607784</td>
+                <td>GRAL PAZ 5201</td>
+                <td>ZULMA ALE</td>
+              </tr>
+              <tr>
+                <td>NACIONAL</td>
+                <td>4607787</td>
+                <td>DORREGO 3314</td>
+                <td>NACIONAL</td>
+              </tr>
+              <tr>
+                <td>DOÑA RAFAELA</td>
+                <td>4604585</td>
+                <td>GRAL PAZ 6061</td>
+                <td>DOÑA RAFAELA</td>
+              </tr>
+              <tr>
+                <td>SOC ALEMANA 1</td>
+                <td>4607836</td>
+                <td>GRAL PAZ 7073</td>
+                <td>SOC ALEMANA 1</td>
+              </tr>
+              <tr>
+                <td>SOC ALEMANA 2</td>
+                <td>4608084</td>
+                <td>ALTE BROW 5300</td>
+                <td>SOC ALEMANA 2</td>
+              </tr>
+              <tr>
+                <td>LA PARRILLA</td>
+                <td>4604811</td>
+                <td>A DEL VALLE 5802</td>
+                <td>LA PARRILLA</td>
+              </tr>
+              <tr>
+                <td>GRAN DORIA</td>
+                <td>4530649</td>
+                <td>GRAL. SAN MARTIN 2300</td>
+                <td>GRAN DORIA</td>
+              </tr>
+            </tbody>
+          </table>
+        </article>
       </section>
     </Layout>
   );
