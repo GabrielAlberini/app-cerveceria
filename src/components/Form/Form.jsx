@@ -93,6 +93,7 @@ const Form = ({ estado, handleChange, handleSubmit }) => {
               </option>
               <option value="Mitos">Mitos</option>
               <option value="Diva">Diva</option>
+              <option value="Gran Doria">Gran Doria</option>
               <option value="Republica">Republica</option>
               <option value="Don Marcos">Don Marcos</option>
               <option value="Primos">Primos</option>

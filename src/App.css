@@ -1,13 +1,13 @@
 @font-face {
   font-family: "Tungsten-Bold";
-  src: url("./fonts/FontsFree-Net-Tungsten-Bold.ttf") format("truetype");
+  src: url("FontsFree-Net-Tungsten-Bold.ttf") format("truetype");
   font-weight: bold;
   font-style: normal;
 }
 
 @font-face {
   font-family: "Barlow-Regular";
-  src: url("./fonts/Barlow-Regular.ttf") format("truetype");
+  src: url("Barlow-Regular.ttf") format("truetype");
   font-style: normal;
 }
 

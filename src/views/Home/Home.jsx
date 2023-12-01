@@ -13,8 +13,12 @@ const Home = () => {
       />
       <section className="custom-section-home">
         <div className="cont-titles-section-home">
-          <h3>GRACIAS</h3>
-          <h2>Celebrando nuestras alegrias junto a vos</h2>
+          <h2>1. Valida tus datos.</h2>
+          <h2>2. Genera un cupón.</h2>
+          <h2>3. Pedile al mozo que te lo valide.</h2>
+          <h2>4. Descargalo.</h2>
+          <h2>5. Recorda que podes generar uno por día.</h2>
+          <h2>6. DISFRUTA.</h2>
         </div>
         <div className="custom-cont-img-home">
           <div className="cont-img-home">
