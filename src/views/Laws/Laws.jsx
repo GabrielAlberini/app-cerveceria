@@ -9,7 +9,7 @@ export const Laws = () => {
         title="BASES Y CONDICIONES PROMOCION: “Mes del Liso 2023”."
         urlImage={"./fabrica.jpg"}
       />
-      <section className="container p-6">
+      <section className="p-6 cont-laws-page">
         <div className="pt-5 pb-5">
           <h2 className="num-law">1.</h2>
           <p>

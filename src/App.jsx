@@ -7,15 +7,23 @@ import { NotificacionDisponibilidad } from "./components/NotificacionDisponibili
 import { AlertMessage } from "./components/Alert/Alert";
 import "./App.css";
 import { LOCAL_STORAGE_KEYS } from "./utils/constans";
-import { handleFetch } from "./utils/handleFetch";
+// import { handleFetch } from "./utils/handleFetch";
 
 const App = () => {
   const isFormAvailableNow = () => {
     const now = new Date();
     const dayOfWeek = now.getDay();
     const hourOfDay = now.getHours();
+    const minutes = now.getMinutes();
 
-    return dayOfWeek >= 1 && dayOfWeek <= 5 && hourOfDay >= 2 && hourOfDay < 19;
+    const isWeekday = dayOfWeek >= 1 && dayOfWeek <= 5;
+
+    const isWithinValidHours =
+      (hourOfDay === 19 && minutes >= 0) ||
+      (hourOfDay > 19 && hourOfDay < 21) ||
+      (hourOfDay === 21 && minutes <= 30);
+
+    return isWeekday && isWithinValidHours;
   };
 
   const getInitialState = () => {
@@ -145,7 +153,7 @@ const App = () => {
         LOCAL_STORAGE_KEYS.ULTIMO_REGISTRO,
         JSON.stringify(nuevoRegistro)
       );
-      await handleFetch(nuevoRegistro);
+      // await handleFetch(nuevoRegistro);
     } else {
       showAlertMessage(
         "Debes ser mayor de 18 años para generar un código.",
@@ -154,15 +162,8 @@ const App = () => {
     }
   };
 
-  const eliminarRegistro = () => {
-    localStorage.removeItem(LOCAL_STORAGE_KEYS.FECHA_VALIDEZ);
+  const eliminarCuponGenerado = () => {
     localStorage.removeItem(LOCAL_STORAGE_KEYS.ULTIMO_REGISTRO);
-
-    setEstado((prevEstado) => ({
-      ...prevEstado,
-      codigoGenerado: "",
-      ultimoRegistro: {},
-    }));
   };
 
   const handleSubmit = (e) => {
