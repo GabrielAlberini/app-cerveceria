@@ -1,0 +1,16 @@
+.custom-button-submit {
+  background-color: #001a4a !important;
+  color: white;
+  display: block;
+  padding: 10px 20px;
+  border: 1px solid white;
+  border-radius: 8px;
+}
+
+.custom-button-submit:hover {
+  background-color: white !important;
+  color: #001a4a !important;
+  outline: 1px solid #001a4a !important;
+  border-radius: 8px;
+  transition: all 0.1s;
+}

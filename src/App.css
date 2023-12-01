@@ -1,7 +1,29 @@
+@font-face {
+  font-family: "Tungsten-Bold";
+  src: url("./fonts/FontsFree-Net-Tungsten-Bold.ttf") format("truetype");
+  font-weight: bold;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Barlow-Regular";
+  src: url("./fonts/Barlow-Regular.ttf") format("truetype");
+  font-style: normal;
+}
+
 * {
   margin: 0 !important;
   padding: 0;
   box-sizing: border-box !important;
+  font-family: Barlow-Regular;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5 {
+  font-family: Tungsten-Bold;
 }
 
 .input-custom {
@@ -10,7 +32,14 @@
 }
 
 .cupon {
-  background-color: #ffd700;
   padding: 20px;
   border-radius: 10px;
+}
+
+h2 {
+  font-size: 1.5rem;
+}
+
+p {
+  font-size: 1.125rem;
 }

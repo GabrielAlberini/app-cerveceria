@@ -1,0 +1,63 @@
+.custom-section-home {
+  min-height: 100vh;
+  display: flex;
+}
+
+.custom-section-home div {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.cont-titles-section-home {
+  color: #001a4a;
+}
+
+.cont-titles-section-home h2 {
+  font-size: 2rem;
+}
+
+.cont-titles-section-home h3 {
+  font-size: 1.5rem;
+}
+
+.cont-img-home {
+  height: 50%;
+  object-fit: cover;
+}
+
+.cont-img-2 {
+  background-color: #001a4a;
+  padding: 40px;
+  color: white;
+  gap: 30px;
+}
+
+.cont-img-2 a {
+  background-color: #001a4a;
+  padding: 40px;
+  color: white;
+  display: block;
+  padding: 10px 20px;
+  border: 1px solid white;
+  border-radius: 8px;
+}
+
+.custom-cont-img-home img {
+  width: 100%;
+}
+
+/*Section cupón*/
+
+.custom-section-cupon {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-image: url("./textura.jpg");
+  background-position: center;
+  background-size: cover;
+}

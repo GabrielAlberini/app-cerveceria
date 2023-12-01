@@ -1,29 +1,31 @@
 import { useState, useEffect } from "react";
 import { saveAs } from "file-saver";
-import { LOCAL_STORAGE_KEYS } from "./utils/constans";
-// import { handleFetch } from "./utils/handleFetch";
 import html2canvas from "html2canvas";
 import { Form } from "./components/Form/Form";
 import { Coupon } from "./components/Cupon/Cupon";
 import { NotificacionDisponibilidad } from "./components/NotificacionDisponibilidad/NotificacionDisponibilidad";
 import { AlertMessage } from "./components/Alert/Alert";
 import "./App.css";
+import { LOCAL_STORAGE_KEYS } from "./utils/constans";
+import { handleFetch } from "./utils/handleFetch";
 
 const App = () => {
+  const isFormAvailableNow = () => {
+    const now = new Date();
+    const dayOfWeek = now.getDay();
+    const hourOfDay = now.getHours();
+
+    return dayOfWeek >= 1 && dayOfWeek <= 5 && hourOfDay >= 2 && hourOfDay < 19;
+  };
+
   const getInitialState = () => {
     const storedUltimoRegistro =
       JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEYS.ULTIMO_REGISTRO)) ||
       {};
-    const storedFechaValidez =
-      localStorage.getItem(LOCAL_STORAGE_KEYS.FECHA_VALIDEZ) || null;
-
-    const tiempoRestante = storedFechaValidez
-      ? Math.floor((new Date(storedFechaValidez).getTime() - Date.now()) / 1000)
-      : 0;
 
     return {
+      tiempoRestante: 0,
       ultimoRegistro: storedUltimoRegistro,
-      tiempoRestante,
       codigoGenerado: storedUltimoRegistro.codigoGenerado || "",
       formulario: {
         nombre: "",
@@ -35,6 +37,7 @@ const App = () => {
         correoElectronico: "",
         seleccionBar: "",
       },
+      isFormAvailable: isFormAvailableNow(),
     };
   };
 
@@ -42,21 +45,30 @@ const App = () => {
   const [showAlert, setShowAlert] = useState(false);
   const [alertMessage, setAlertMessage] = useState("");
   const [alertType, setAlertType] = useState("");
-  const [isFormAvailable, setIsFormAvailable] = useState(false);
+
+  console.log(estado);
 
   useEffect(() => {
-    const calculateFormAvailability = () => {
-      const now = new Date();
-      const dayOfWeek = now.getDay();
-      const hourOfDay = now.getHours();
+    const interval = setInterval(() => {
+      setEstado((prevEstado) => {
+        const now = new Date();
+        const deadline = new Date(now);
+        deadline.setHours(19, 0, 0, 0); // Establecer la hora límite a las 19:00
 
-      const isAvailable =
-        dayOfWeek >= 1 && dayOfWeek <= 4 && hourOfDay >= 19 && hourOfDay < 22;
+        const tiempoRestanteMilisegundos = deadline - now;
+        const tiempoRestanteHoras = Math.floor(
+          tiempoRestanteMilisegundos / (1000 * 60 * 60)
+        );
 
-      setIsFormAvailable(isAvailable);
-    };
+        return {
+          ...prevEstado,
+          tiempoRestante: tiempoRestanteHoras,
+          isFormAvailable: isFormAvailableNow(),
+        };
+      });
+    }, 1000);
 
-    calculateFormAvailability();
+    return () => clearInterval(interval);
   }, []);
 
   useEffect(() => {
@@ -76,44 +88,10 @@ const App = () => {
           codigoGenerado: existingCode,
         }));
       }
-
-      const storedFechaValidez = localStorage.getItem(
-        LOCAL_STORAGE_KEYS.FECHA_VALIDEZ
-      );
-      if (storedFechaValidez) {
-        const tiempoRestante = Math.floor(
-          (new Date(storedFechaValidez).getTime() - Date.now()) / 1000
-        );
-        setEstado((prevEstado) => ({
-          ...prevEstado,
-          tiempoRestante,
-        }));
-      }
     };
 
     updateLocalStorageAndState();
   }, []);
-
-  useEffect(() => {
-    const startCountdown = () => {
-      let intervalId;
-
-      if (estado.tiempoRestante > 0) {
-        intervalId = setInterval(() => {
-          setEstado((prevEstado) => ({
-            ...prevEstado,
-            tiempoRestante: prevEstado.tiempoRestante - 1,
-          }));
-        }, 1000);
-      } else {
-        eliminarRegistro();
-      }
-
-      return () => clearInterval(intervalId);
-    };
-
-    startCountdown();
-  }, [estado.tiempoRestante]);
 
   const showAlertMessage = (message, type) => {
     setAlertMessage(message);
@@ -169,24 +147,7 @@ const App = () => {
         LOCAL_STORAGE_KEYS.ULTIMO_REGISTRO,
         JSON.stringify(nuevoRegistro)
       );
-
-      const fechaValidez = new Date(fechaGeneracion);
-      fechaValidez.setSeconds(fechaValidez.getSeconds() + 30);
-      localStorage.setItem(
-        LOCAL_STORAGE_KEYS.FECHA_VALIDEZ,
-        fechaValidez.toISOString()
-      );
-
-      const tiempoRestante = Math.floor(
-        (fechaValidez.getTime() - Date.now()) / 1000
-      );
-
-      setEstado((prevEstado) => ({
-        ...prevEstado,
-        tiempoRestante,
-      }));
-
-      // await handleFetch(nuevoRegistro);
+      await handleFetch(nuevoRegistro);
     } else {
       showAlertMessage(
         "Debes ser mayor de 18 años para generar un código.",
@@ -202,28 +163,8 @@ const App = () => {
     setEstado((prevEstado) => ({
       ...prevEstado,
       codigoGenerado: "",
-      tiempoRestante: 0,
       ultimoRegistro: {},
     }));
-  };
-
-  const calcularFechaValidez = () => {
-    const fechaValidezString = localStorage.getItem(
-      LOCAL_STORAGE_KEYS.FECHA_VALIDEZ
-    );
-    if (!fechaValidezString) {
-      return "Fecha de validez no disponible";
-    }
-
-    const fechaValidez = new Date(fechaValidezString);
-    const options = {
-      year: "numeric",
-      month: "long",
-      day: "numeric",
-      hour: "numeric",
-      minute: "numeric",
-    };
-    return fechaValidez.toLocaleDateString("es-ES", options);
   };
 
   const handleSubmit = (e) => {
@@ -313,42 +254,27 @@ const App = () => {
   };
 
   return (
-    <div
-      className="columns is-centered p-5"
-      style={{
-        backgroundImage: 'url("bg.jpg")',
-        backgroundSize: "cover",
-        backgroundPosition: "center",
-        minHeight: "100vh",
-      }}
-    >
-      <div className="column is-half is-flex is-justify-content-center">
-        <div className="box has-background-white-bis has-shadow p-5">
-          <h1 className="title is-1 has-text-centered is-size-3 mb-4">
-            Test Cupón Cervecería
-          </h1>
-          {showAlert && (
-            <AlertMessage message={alertMessage} type={alertType} />
-          )}
-          {isFormAvailable ? (
-            estado.codigoGenerado ? (
-              <Coupon
-                estado={estado}
-                handleDownload={handleDownload}
-                handleCodigoValidado={handleCodigoValidado}
-                calcularFechaValidez={calcularFechaValidez}
-              />
-            ) : (
-              <Form
-                estado={estado}
-                handleChange={handleChange}
-                handleSubmit={handleSubmit}
-              />
-            )
+    <div className="column is-half is-flex is-justify-content-center">
+      <div className="box has-background-white-bis has-shadow p-5">
+        {showAlert && <AlertMessage message={alertMessage} type={alertType} />}
+        {estado.isFormAvailable ? (
+          estado.codigoGenerado ? (
+            <Coupon
+              tiempoRestante={estado.tiempoRestante}
+              estado={estado}
+              handleDownload={handleDownload}
+              handleCodigoValidado={handleCodigoValidado}
+            />
           ) : (
-            <NotificacionDisponibilidad />
-          )}
-        </div>
+            <Form
+              estado={estado}
+              handleChange={handleChange}
+              handleSubmit={handleSubmit}
+            />
+          )
+        ) : (
+          <NotificacionDisponibilidad />
+        )}
       </div>
     </div>
   );

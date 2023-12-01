@@ -1,3 +1,5 @@
+import "./Form.css";
+
 /* eslint-disable react/prop-types */
 const Form = ({ estado, handleChange, handleSubmit }) => {
   return (
@@ -89,9 +91,36 @@ const Form = ({ estado, handleChange, handleSubmit }) => {
               <option value="" disabled>
                 Selecciona una opción
               </option>
-              <option value="Opción 1">Opción 1</option>
-              <option value="Opción 2">Opción 2</option>
-              <option value="Opción 3">Opción 3</option>
+              <option value="Mitos">Mitos</option>
+              <option value="Diva">Diva</option>
+              <option value="Republica">Republica</option>
+              <option value="Don Marcos">Don Marcos</option>
+              <option value="Primos">Primos</option>
+              <option value="Agora">Agora</option>
+              <option value="Lo de Nestor">Lo de Nestor</option>
+              <option value="Bizarro">Bizarro</option>
+              <option value="El Paralacio de Doña Rafaela">
+                El Paralacio de Doña Rafaela
+              </option>
+              <option value="El Clásico">El Clásico</option>
+              <option value="Bar La Amistad">Bar La Amistad</option>
+              <option value="Say Mon">Say Mon</option>
+              <option value="Say No More (Club Independiente)">
+                Say No More (Club Independiente)
+              </option>
+              <option value="Say No More (Cortada Falucho)">
+                Say No More (Cortada Falucho)
+              </option>
+              <option value="Dolce Vatita">Dolce Vatita</option>
+              <option value="Restaurante España">Restaurante España</option>
+              <option value="Almacen Alberdi">Almacen Alberdi</option>
+              <option value="Patio Cerveceria">Patio Cerveceria</option>
+              <option value="Zulma Ale">Zulma Ale </option>
+              <option value="Nacional">Nacional</option>
+              <option value="Doña Rafaela">Doña Rafaela</option>
+              <option value="Sociedad Alemana 1">Sociedad Alemana 1</option>
+              <option value="Sociedad Alemana 2">Sociedad Alemana 2</option>
+              <option value="La Parrilla">La Parrilla</option>
             </select>
           </div>
         </div>
@@ -99,7 +128,10 @@ const Form = ({ estado, handleChange, handleSubmit }) => {
 
       <div className="field">
         <div className="control">
-          <button className="button is-primary is-fullwidth" type="submit">
+          <button
+            className="button is-primary is-fullwidth custom-button-submit"
+            type="submit"
+          >
             Generar Código
           </button>
         </div>

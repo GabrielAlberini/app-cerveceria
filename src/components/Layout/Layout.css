@@ -1,0 +1,17 @@
+.custom-navbar {
+  background-color: #001a4a !important;
+  position: fixed;
+  width: 100%;
+}
+
+.custom-link-header {
+  color: white !important;
+}
+
+.custom-link-header:hover {
+  color: #001a4a !important;
+}
+
+.custom-link-footer:hover {
+  color: white;
+}
