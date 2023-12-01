@@ -6,3 +6,15 @@
   border: 1px solid white;
   border-radius: 8px;
 }
+
+.cont-buttons-cupon {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+}
+
+@media (max-width: 500px) {
+  .cont-buttons-cupon {
+    flex-direction: column;
+  }
+}

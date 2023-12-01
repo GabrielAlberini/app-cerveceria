@@ -8,8 +8,10 @@ export const Banner = ({ title, urlImage }) => {
       style={{ backgroundImage: `url(${urlImage})` }}
     >
       <div className="hero-body">
-        <div>
-          <h1 className="title is-1 has-text-white">{title}</h1>
+        <div className="cont-title-banner">
+          <h1 className="title is-1 has-text-white is-size-1-mobile is-size-2-tablet is-size-1-desktop">
+            {title}
+          </h1>{" "}
         </div>
       </div>
     </section>

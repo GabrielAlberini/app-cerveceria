@@ -11,11 +11,13 @@ const Coupon = ({
     <article className="mt-4 has-text-centered">
       <div id="cupon" className="cupon">
         <p className="title is-1">¡Cupón Generado!</p>
-        <p className="has-text-danger mb-4">
-          Mostrale el cupón al mozo para que te lo valide...
-        </p>
-        <p className="subtitle is-3 has-text-success">
-          {estado.codigoGenerado}-LISO
+        {!estado.ultimoRegistro.codigoValidado && (
+          <p className="has-text-danger mb-4">
+            Mostrale el cupón al mozo para que te lo valide...
+          </p>
+        )}
+        <p className="subtitle is-3 mt-5">
+          <strong>{estado.codigoGenerado}-LISO</strong>
         </p>
         <div className="additional-info mt-5 mb-5">
           <p className="subtitle is-5">
@@ -45,13 +47,14 @@ const Coupon = ({
             </p>
           )}
         </div>
-      </div>
-      <div>
-        {estado.ultimoRegistro.codigoValidado ? (
+        {estado.ultimoRegistro.codigoValidado && (
           <p className="subtitle is-6 has-text-danger mb-4">CÓDIGO VALIDADO</p>
-        ) : (
+        )}
+      </div>
+      <div className="cont-buttons-cupon">
+        {!estado.ultimoRegistro.codigoValidado && (
           <button
-            className="button is-success mt-3 mr-3 custom-buttom-descargar"
+            className="button is-success mt-3 custom-buttom-descargar"
             onClick={() => handleCodigoValidado()}
             disabled={estado.ultimoRegistro.codigoValidado}
           >

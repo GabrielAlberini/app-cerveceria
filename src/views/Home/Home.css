@@ -60,3 +60,14 @@
   background-position: center;
   background-size: cover;
 }
+
+@media (max-width: 500px) {
+  .custom-section-home {
+    flex-direction: column;
+  }
+
+  .cont-titles-section-home {
+    padding: 20px;
+    text-align: center;
+  }
+}

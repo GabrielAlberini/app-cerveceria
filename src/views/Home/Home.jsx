@@ -22,7 +22,7 @@ const Home = () => {
         </div>
         <div className="custom-cont-img-home">
           <div className="cont-img-home">
-            <img src="./fabrica-2.png" alt="" />
+            <img src="./lisos.jpg" alt="" />
           </div>
           <div className="cont-img-home cont-img-2">
             <p>

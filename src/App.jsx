@@ -46,8 +46,6 @@ const App = () => {
   const [alertMessage, setAlertMessage] = useState("");
   const [alertType, setAlertType] = useState("");
 
-  console.log(estado);
-
   useEffect(() => {
     const interval = setInterval(() => {
       setEstado((prevEstado) => {

@@ -1,10 +1,9 @@
 .custom-hero-background {
   background-color: #00205c !important;
   height: 400px;
-  display: flex;
-  justify-content: center;
+  display: grid;
+  place-content: center;
   min-height: 100vh;
-  align-items: center;
   text-align: center;
   background-position: center;
   background-repeat: no-repeat;
