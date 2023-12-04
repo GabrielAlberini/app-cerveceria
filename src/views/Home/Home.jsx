@@ -11,10 +11,7 @@ const Home = () => {
         title="GENERA TU CUPÓN Y DISTRUTA DE NUESTRA TRADICIÓN SANTAFESINA"
         urlImage={"./lata.jpg"}
       />
-      <section
-        className="custom-section-home"
-        style={{ backgroundImage: `url(${"./textura.jpg"})` }}
-      >
+      <section className="custom-section-home">
         <div className="cont-titles-section-home">
           <h2>1. Valida tus datos.</h2>
           <h2>2. Genera un cupón.</h2>
@@ -38,7 +35,10 @@ const Home = () => {
         </div>
       </section>
 
-      <section className="custom-section-cupon">
+      <section
+        className="custom-section-cupon"
+        style={{ backgroundImage: `url(${"./textura.jpg"})` }}
+      >
         <App />
       </section>
     </Layout>
