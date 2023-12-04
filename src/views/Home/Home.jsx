@@ -30,7 +30,7 @@ const Home = () => {
               los amantes del liso. ¡Descubre nuestra trayectoria en este mes de
               celebración!
             </p>
-            <Link to={"/"}>Ver bases y condiciones</Link>
+            <Link to={"/bases-y-condiciones"}>Ver bases y condiciones</Link>
           </div>
         </div>
       </section>
