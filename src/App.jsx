@@ -19,8 +19,8 @@ const App = () => {
     const isWeekday = dayOfWeek >= 1 && dayOfWeek <= 5;
 
     const isWithinValidHours =
-      (hourOfDay === 13 && minutes >= 0) ||
-      (hourOfDay > 13 && hourOfDay < 21) ||
+      (hourOfDay === 19 && minutes >= 0) ||
+      (hourOfDay > 19 && hourOfDay < 21) ||
       (hourOfDay === 21 && minutes <= 30);
 
     return isWeekday && isWithinValidHours;
