@@ -7,7 +7,7 @@ import { NotificacionDisponibilidad } from "./components/NotificacionDisponibili
 import { AlertMessage } from "./components/Alert/Alert";
 import "./App.css";
 import { LOCAL_STORAGE_KEYS } from "./utils/constans";
-// import { handleFetch } from "./utils/handleFetch";
+import { handleFetch } from "./utils/handleFetch";
 
 const App = () => {
   const isFormAvailableNow = () => {
@@ -19,8 +19,8 @@ const App = () => {
     const isWeekday = dayOfWeek >= 1 && dayOfWeek <= 5;
 
     const isWithinValidHours =
-      (hourOfDay === 19 && minutes >= 0) ||
-      (hourOfDay > 19 && hourOfDay < 21) ||
+      (hourOfDay === 13 && minutes >= 0) ||
+      (hourOfDay > 13 && hourOfDay < 21) ||
       (hourOfDay === 21 && minutes <= 30);
 
     return isWeekday && isWithinValidHours;
@@ -32,7 +32,6 @@ const App = () => {
       {};
 
     return {
-      tiempoRestante: 0,
       ultimoRegistro: storedUltimoRegistro,
       codigoGenerado: storedUltimoRegistro.codigoGenerado || "",
       formulario: {
@@ -55,33 +54,11 @@ const App = () => {
   const [alertType, setAlertType] = useState("");
 
   useEffect(() => {
-    const interval = setInterval(() => {
-      setEstado((prevEstado) => {
-        const now = new Date();
-        const deadline = new Date(now);
-        deadline.setHours(19, 0, 0, 0); // Establecer la hora límite a las 19:00
-
-        const tiempoRestanteMilisegundos = deadline - now;
-        const tiempoRestanteHoras = Math.floor(
-          tiempoRestanteMilisegundos / (1000 * 60 * 60)
-        );
-
-        return {
-          ...prevEstado,
-          tiempoRestante: tiempoRestanteHoras,
-          isFormAvailable: isFormAvailableNow(),
-        };
-      });
-    }, 1000);
-
-    return () => clearInterval(interval);
-  }, []);
-
-  useEffect(() => {
     const updateLocalStorageAndState = () => {
       const storedUltimoRegistro =
         JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEYS.ULTIMO_REGISTRO)) ||
         {};
+
       setEstado((prevEstado) => ({
         ...prevEstado,
         ultimoRegistro: storedUltimoRegistro,
@@ -93,6 +70,16 @@ const App = () => {
           ...prevEstado,
           codigoGenerado: existingCode,
         }));
+
+        // Verificar si es después de las 21:30 para limpiar el localStorage
+        const now = new Date();
+        const horaLimiteLimpieza = new Date(now);
+        horaLimiteLimpieza.setHours(21, 40, 0, 0);
+
+        if (now > horaLimiteLimpieza) {
+          // Limpiar localStorage si es después de las 21:30
+          localStorage.removeItem(LOCAL_STORAGE_KEYS.ULTIMO_REGISTRO);
+        }
       }
     };
 
@@ -103,14 +90,14 @@ const App = () => {
     setAlertMessage(message);
     setAlertType(type);
     setShowAlert(true);
-    setTimeout(() => setShowAlert(false), 5000);
+    setTimeout(() => setShowAlert(false), 3000);
   };
 
   const handleDownload = async () => {
     const target = document.getElementById("cupon");
     const canvas = await html2canvas(target);
     canvas.toBlob((blob) => {
-      saveAs(blob, "codigo_generado.jpg");
+      saveAs(blob, "CUPÓN-LISO.jpg");
     });
   };
 
@@ -153,17 +140,13 @@ const App = () => {
         LOCAL_STORAGE_KEYS.ULTIMO_REGISTRO,
         JSON.stringify(nuevoRegistro)
       );
-      // await handleFetch(nuevoRegistro);
+      await handleFetch(nuevoRegistro);
     } else {
       showAlertMessage(
         "Debes ser mayor de 18 años para generar un código.",
         "danger"
       );
     }
-  };
-
-  const eliminarCuponGenerado = () => {
-    localStorage.removeItem(LOCAL_STORAGE_KEYS.ULTIMO_REGISTRO);
   };
 
   const handleSubmit = (e) => {
@@ -259,7 +242,6 @@ const App = () => {
         {estado.isFormAvailable ? (
           estado.codigoGenerado ? (
             <Coupon
-              tiempoRestante={estado.tiempoRestante}
               estado={estado}
               handleDownload={handleDownload}
               handleCodigoValidado={handleCodigoValidado}

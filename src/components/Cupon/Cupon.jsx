@@ -1,12 +1,7 @@
 import "./Cupon.css";
 
 /* eslint-disable react/prop-types */
-const Coupon = ({
-  estado,
-  handleDownload,
-  handleCodigoValidado,
-  tiempoRestante,
-}) => {
+const Coupon = ({ estado, handleDownload, handleCodigoValidado }) => {
   return (
     <article className="mt-4 has-text-centered">
       <div id="cupon" className="cupon">
@@ -37,15 +32,6 @@ const Coupon = ({
             <strong>Correo Electronico:</strong>{" "}
             {estado.ultimoRegistro.correoElectronico || ""}
           </p>
-
-          {tiempoRestante > 0 && (
-            <p className="pt-4">
-              <strong>
-                Tiempo restante para la disponibilidad del formulario:
-              </strong>{" "}
-              {tiempoRestante} horas.
-            </p>
-          )}
         </div>
         {estado.ultimoRegistro.codigoValidado && (
           <p className="subtitle is-6 has-text-danger mb-4">CÓDIGO VALIDADO</p>
