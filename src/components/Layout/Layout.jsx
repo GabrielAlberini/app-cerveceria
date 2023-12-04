@@ -11,13 +11,13 @@ const Layout = ({ children }) => {
         aria-label="main navigation"
       >
         <div className="navbar-brand">
-          <a className="navbar-item has-text-white" href="/">
+          <Link className="navbar-item has-text-white" to="/">
             <img
               src="./logo.png" // Reemplaza esto con la ruta a tu logotipo
               alt="Mi Logo"
               style={{ maxHeight: "none", height: "3em" }} // Ajusta el tamaño máximo y actual
             />
-          </a>
+          </Link>
         </div>
 
         <div id="navbarMenu" className="navbar-menu">
@@ -31,7 +31,11 @@ const Layout = ({ children }) => {
             >
               CUPÓN
             </Link>
-            <Link to={"/"} className="navbar-item custom-link-header" href="/">
+            <Link
+              to={"/bases-y-condiciones"}
+              className="navbar-item custom-link-header"
+              href="/"
+            >
               BASES Y CONDICIONES
             </Link>
           </div>
