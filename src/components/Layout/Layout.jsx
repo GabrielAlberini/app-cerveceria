@@ -24,11 +24,7 @@ const Layout = ({ children }) => {
           <div className="navbar-end ml-auto">
             {" "}
             {/* Añade la clase ml-auto aquí */}
-            <Link
-              to={"/cupon"}
-              className="navbar-item custom-link-header"
-              href="/"
-            >
+            <Link to={"/"} className="navbar-item custom-link-header">
               CUPÓN
             </Link>
             <Link
