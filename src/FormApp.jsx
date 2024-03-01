@@ -9,7 +9,7 @@ import "./App.css";
 import { LOCAL_STORAGE_KEYS } from "./utils/constans";
 import { handleFetch } from "./utils/handleFetch";
 
-const App = () => {
+const FormApp = () => {
   const isFormAvailableNow = () => {
     const now = new Date();
     const dayOfWeek = now.getDay();
@@ -261,4 +261,4 @@ const App = () => {
   );
 };
 
-export { App };
+export { FormApp };

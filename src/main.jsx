@@ -1,13 +1,13 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import { App } from "./App.jsx";
+import { FormApp } from "./FormApp.jsx";
 import "bulma/css/bulma.min.css";
 import { Router } from "./router/router.jsx";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
     <Router>
-      <App />
+      <FormApp />
     </Router>
   </React.StrictMode>
 );

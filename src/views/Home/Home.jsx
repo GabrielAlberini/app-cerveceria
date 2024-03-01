@@ -1,4 +1,4 @@
-import { App } from "../../App";
+import { FormApp } from "../../FormApp";
 import { Layout } from "../../components/Layout/Layout";
 import { Banner } from "../../components/Banner/Banner";
 import { Link } from "react-router-dom";
@@ -39,7 +39,7 @@ const Home = () => {
         className="custom-section-cupon"
         style={{ backgroundImage: `url(${"./textura.jpg"})` }}
       >
-        <App />
+        <FormApp />
       </section>
     </Layout>
   );

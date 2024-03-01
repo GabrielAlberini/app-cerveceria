@@ -1,6 +1,6 @@
-import { API_ENDPOINT } from "./constans";
-
 const handleFetch = async (nuevoRegistro) => {
+  const API = import.meta.env.VITE_API_URL;
+
   const registro = {
     Nombre: nuevoRegistro.nombre,
     DNI: nuevoRegistro.dni,
@@ -12,7 +12,7 @@ const handleFetch = async (nuevoRegistro) => {
   };
 
   try {
-    const response = await fetch(API_ENDPOINT, {
+    const response = await fetch(API, {
       method: "POST",
       mode: "cors",
       headers: { "Content-Type": "Application/json" },
