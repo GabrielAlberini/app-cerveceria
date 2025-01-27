@@ -1,6 +1,22 @@
-const handleFetch = async (nuevoRegistro) => {
-  const API = import.meta.env.VITE_API_URL;
+// Importa los módulos necesarios de Firebase
+import { initializeApp } from "firebase/app";
+import { getFirestore, collection, addDoc } from "firebase/firestore";
 
+// Configuración de Firebase
+const firebaseConfig = {
+  apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
+  authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN,
+  projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID,
+  storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID,
+  appId: import.meta.env.VITE_FIREBASE_APP_ID,
+};
+
+// Inicializar Firebase
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+
+const handleFetch = async (nuevoRegistro) => {
   const registro = {
     Nombre: nuevoRegistro.nombre,
     DNI: nuevoRegistro.dni,
@@ -12,18 +28,10 @@ const handleFetch = async (nuevoRegistro) => {
   };
 
   try {
-    const response = await fetch(API, {
-      method: "POST",
-      mode: "cors",
-      headers: { "Content-Type": "Application/json" },
-      body: JSON.stringify(registro),
-    });
-
-    if (!response.ok) {
-      throw new Error("Error en la solicitud fetch");
-    }
+    // Agregar el documento a la colección "cupones"
+    await addDoc(collection(db, "cupones"), registro);
   } catch (error) {
-    console.error("Error en la solicitud fetch:", error.message);
+    console.error("Error al guardar el documento:", error);
   }
 };
 
