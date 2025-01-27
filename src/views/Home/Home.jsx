@@ -7,30 +7,32 @@ import "./Home.css";
 const Home = () => {
   return (
     <Layout>
-      <Banner
-        title="GENERA TU CUPÓN Y DISTRUTA DE NUESTRA TRADICIÓN SANTAFESINA"
-        urlImage={"./lata.jpg"}
-      />
+      <Banner urlImage={"./banner.png"} />
       <section className="custom-section-home">
         <div className="cont-titles-section-home">
-          <h2>1. Valida tus datos.</h2>
-          <h2>2. Genera un cupón.</h2>
-          <h2>3. Pedile al mozo que te lo valide.</h2>
-          <h2>4. Descargalo.</h2>
-          <h2>5. Recorda que podes generar uno por día.</h2>
-          <h2>6. DISFRUTA.</h2>
+          <ul>
+            <li>1. COMPLETÁ TUS DATOS.</li>
+            <li>2. GENERÁ UN CÓDIGO.</li>
+            <li>3. PEDILE AL MOZO QUE LO VALIDE.</li>
+            <li>4. DESCARGALO.</li>
+            <li>5. DISFRUTÁ.</li>
+          </ul>
+
+          <div id="cont-text-cupon-diario">
+            <span>[</span>
+            <p>
+              PODÉS GENERAR UN
+              <br /> CUPÓN POR DÍA
+            </p>
+            <span>]</span>
+          </div>
         </div>
         <div className="custom-cont-img-home">
           <div className="cont-img-home">
             <img src="./lisos.jpg" alt="" />
           </div>
           <div className="cont-img-home cont-img-2">
-            <p>
-              Desde 1912, nos dedicamos a crear la bebida preferida por todos
-              los amantes del liso. ¡Descubre nuestra trayectoria en este mes de
-              celebración!
-            </p>
-            <Link to={"/bases-y-condiciones"}>Ver bases y condiciones</Link>
+            <Link to={"/bases-y-condiciones"}>BASES Y CONDICIONES</Link>
           </div>
         </div>
       </section>

@@ -14,10 +14,15 @@
 
 .cont-titles-section-home {
   color: #001a4a;
+  display: flex;
+  flex-direction: column;
+  gap: 70px;
 }
 
-.cont-titles-section-home h2 {
-  font-size: 2rem;
+.cont-titles-section-home ul li {
+  font-size: 1.5rem;
+  text-align: center;
+  font-weight: 700;
 }
 
 .cont-titles-section-home h3 {
@@ -37,13 +42,19 @@
 }
 
 .cont-img-2 a {
-  background-color: #001a4a;
+  background-color: #e20717;
   padding: 40px;
   color: white;
   display: block;
   padding: 10px 20px;
-  border: 1px solid white;
+  font-weight: 600;
+  font-size: 18px;
+  transition: opacity 0.3s;
   border-radius: 8px;
+}
+
+.cont-img-2 a:hover {
+  opacity: 0.9;
 }
 
 .custom-cont-img-home img {
@@ -61,12 +72,27 @@
   background-size: cover;
 }
 
+#cont-text-cupon-diario {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  & p {
+    text-align: center;
+    font-weight: 900;
+  }
+  & span {
+    font-size: 70px;
+  }
+}
+
 @media (max-width: 500px) {
   .custom-section-home {
     flex-direction: column;
   }
 
-  .cont-titles-section-home {
+  .cont-titles-section-home ul {
     padding: 20px;
     text-align: center;
   }
