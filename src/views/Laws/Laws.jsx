@@ -239,7 +239,7 @@ export const Laws = () => {
             Autónoma de Buenos Aires.
           </p>
         </div>
-        <article className="table-container mt-4  mb-5">
+        <article id="bares" className="table-container mt-4  mb-5">
           <h2 className="num-law">Tabla de Puntos de Venta Adheridos</h2>
           <table className="table">
             <thead>

@@ -34,6 +34,7 @@ const Home = () => {
           </div>
           <div className="cont-img-home cont-img-2">
             <Link to={"/bases-y-condiciones"}>BASES Y CONDICIONES</Link>
+            <Link to={"/bases-y-condiciones#bares"}>LOCALES ADHERIDOS</Link>
           </div>
         </div>
       </section>
