@@ -40,8 +40,7 @@ const Layout = ({ children }) => {
 
       <main style={{ minHeight: "100vh" }}>{children}</main>
       <footer
-        className="footer"
-        style={{ color: "white", backgroundColor: "black" }}
+        style={{ color: "white", backgroundColor: "black", padding: "20px" }}
       >
         <div className="content has-text-centered">
           <p>
