@@ -243,161 +243,73 @@ export const Laws = () => {
             <thead>
               <tr>
                 <th>PUNTO DE VENTA ADHERIDO</th>
-                <th>N° CUENTA</th>
                 <th>DIRECCION</th>
-                <th>NOMBRE FANTASIA</th>
               </tr>
             </thead>
             <tbody>
               <tr>
-                <td>MITOS</td>
-                <td>4607291</td>
-                <td>SARMIENTO 3683</td>
-                <td>MITOS</td>
-              </tr>
-              <tr>
-                <td>DIVA</td>
-                <td>4608397</td>
-                <td>ALVEAR 3489</td>
-                <td>DIVA</td>
-              </tr>
-              <tr>
-                <td>REPUBLICA BAR DE BARRIO</td>
-                <td>4607669</td>
-                <td>LAS HERAS 3701</td>
-                <td>REPUBLICA</td>
+                <td>PATIO CERVECERIA SANTA FE</td>
+                <td>Calchines 1398, Santa Fe</td>
               </tr>
               <tr>
                 <td>DON MARCOS</td>
-                <td>4607725</td>
-                <td>CASTELLANOS 2120</td>
-                <td>DON MARCOS</td>
+                <td>Castellanos esq. Las Heras, Santa Fe</td>
+              </tr>
+              <tr>
+                <td>LA CITY</td>
+                <td>San Martín y La Rioja, Santa Fe</td>
               </tr>
               <tr>
                 <td>PRIMOS</td>
-                <td>4606777</td>
-                <td>GRAL LOPEZ 2614</td>
-                <td>PRIMOS</td>
+                <td>Av General López 2614, Santa Fe</td>
               </tr>
               <tr>
-                <td>AGORA CAMPO</td>
-                <td>4607263</td>
-                <td>AU ROSA/SFE KM 5.5</td>
-                <td>AGORA</td>
+                <td>1980</td>
+                <td>Costanera Este, Santa Fe</td>
               </tr>
               <tr>
-                <td>LO DE NESTOR</td>
-                <td>4606486</td>
-                <td>GRAL PAZ 6304</td>
-                <td>LO DE NESTOR</td>
+                <td>El Palacio de Doña Rafaela</td>
+                <td>Av. Aristóbulo del Valle 6729, Santa Fe</td>
               </tr>
               <tr>
                 <td>BIZARRO</td>
-                <td>-</td>
-                <td>7 DE MARZO Y MACIAS</td>
-                <td>-</td>
+                <td>Av. 7 de marzo 1498, Santo Tomé</td>
               </tr>
               <tr>
-                <td>EL PALACIO DE DOÑA RAFAELA</td>
-                <td>4608136</td>
-                <td>A DEL VALLE 6729</td>
-                <td>EL PALACIO DE DOÑA RAFAELA</td>
+                <td>EL NACIONAL</td>
+                <td>Ituzaingo y Dorrego, Santa Fe</td>
               </tr>
               <tr>
-                <td>EL CLASICO BOWLING</td>
-                <td>4608920</td>
-                <td>HIP IRIGOYEN 3179</td>
-                <td>EL CLASICO</td>
+                <td>DIVA</td>
+                <td>Alvear & Boulevard, Santa Fe</td>
               </tr>
               <tr>
-                <td>BAR LA AMISTAD</td>
-                <td>4605389</td>
-                <td>AV PEÑALOZA 5078</td>
-                <td>BAR LA AMISTAD</td>
+                <td>LO DE NESTOR</td>
+                <td>Av. Gral. Paz 6308, Santa Fe</td>
               </tr>
               <tr>
-                <td>SAY MON</td>
-                <td>-</td>
-                <td>GRAL PAZ 5785</td>
-                <td>SAY MON</td>
+                <td>MITOS</td>
+                <td>Sarmiento y Maipú, Santa Fe</td>
+              </tr>
+              <tr>
+                <td>EL CLÁSICO</td>
+                <td>Hipólito Irigoyen 3179</td>
+              </tr>
+              <tr>
+                <td>SAYMON</td>
+                <td>Gral. Paz 5785, Santa Fe</td>
               </tr>
               <tr>
                 <td>CLUB INDEPENDIENTE</td>
-                <td>4607317</td>
-                <td>ZAVALLA 2860</td>
-                <td>SAY NOMORE</td>
-              </tr>
-              <tr>
-                <td>CORTADA FALUCHO</td>
-                <td>4607333</td>
-                <td>SAN MARTIN 2360</td>
-                <td>SAY NOMORE</td>
-              </tr>
-              <tr>
-                <td>DOLCE VATITA</td>
-                <td>4607854</td>
-                <td>7 DE MARZO 1599</td>
-                <td>DOLCE VATITA</td>
-              </tr>
-              <tr>
-                <td>RESTAURANT ESPAÑA</td>
-                <td>4603936</td>
-                <td>SAN MARTIN 2651</td>
-                <td>RESTAURANT ESPAÑA</td>
-              </tr>
-              <tr>
-                <td>ALMACEN ALBERDI</td>
-                <td>4608839</td>
-                <td>BELGRANO 3660</td>
-                <td>ALMACEN ALBERDI</td>
-              </tr>
-              <tr>
-                <td>PATIO CERVECERIA</td>
-                <td>4608062</td>
-                <td>CALCHINES 1398</td>
-                <td>PATIO CERVECERIA</td>
+                <td>Dr Zavalla 2860, Santa Fe</td>
               </tr>
               <tr>
                 <td>ZULMA ALE</td>
-                <td>4607784</td>
-                <td>GRAL PAZ 5201</td>
-                <td>ZULMA ALE</td>
+                <td>General Paz 5201, Santa Fe</td>
               </tr>
               <tr>
-                <td>NACIONAL</td>
-                <td>4607787</td>
-                <td>DORREGO 3314</td>
-                <td>NACIONAL</td>
-              </tr>
-              <tr>
-                <td>DOÑA RAFAELA</td>
-                <td>4604585</td>
-                <td>GRAL PAZ 6061</td>
-                <td>DOÑA RAFAELA</td>
-              </tr>
-              <tr>
-                <td>SOC ALEMANA 1</td>
-                <td>4607836</td>
-                <td>GRAL PAZ 7073</td>
-                <td>SOC ALEMANA 1</td>
-              </tr>
-              <tr>
-                <td>SOC ALEMANA 2</td>
-                <td>4608084</td>
-                <td>ALTE BROW 5300</td>
-                <td>SOC ALEMANA 2</td>
-              </tr>
-              <tr>
-                <td>LA PARRILLA</td>
-                <td>4604811</td>
-                <td>A DEL VALLE 5802</td>
-                <td>LA PARRILLA</td>
-              </tr>
-              <tr>
-                <td>GRAN DORIA</td>
-                <td>4530649</td>
-                <td>GRAL. SAN MARTIN 2300</td>
-                <td>GRAN DORIA</td>
+                <td>El Alberdi, Alma de bodegón</td>
+                <td>Belgrano 3660, Santa Fe</td>
               </tr>
             </tbody>
           </table>
