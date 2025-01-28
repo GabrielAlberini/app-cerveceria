@@ -1,6 +1,5 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { Home } from "../views/Home/Home";
-import { NotFound } from "../views/NotFound/NotFound";
 import { Laws } from "../views/Laws/Laws";
 import ScrollToHash from "../components/ScrollToHash/ScrollToHash";
 
