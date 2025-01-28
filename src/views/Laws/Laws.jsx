@@ -6,20 +6,20 @@ export const Laws = () => {
   return (
     <Layout>
       <Banner
-        title="BASES Y CONDICIONES PROMOCION: “Mes del Liso 2023”."
+        title="BASES Y CONDICIONES PROMOCION: “Promo Liso 2025”"
         urlImage={"./fabrica.jpg"}
       />
       <section className="p-6 cont-laws-page">
         <div className="pt-5 pb-5">
           <h2 className="num-law">1.</h2>
           <p>
-            Compañía Industrial Cervecera S.A.(en adelante el “Organizador”),
-            CUIT Nº 30-50577985- 8, con domicilio en Calchines 1401, (CP 3000)
+            Compañía Industrial Cervecera S.A. (en adelante el “Organizador”),
+            CUIT Nº 30-50577985-8, con domicilio en Calchines 1401, (CP 3000)
             Santa Fe, provincia de Santa Fe, implementa la promoción denominada
-            “Mes del Liso” (en adelante la “Promoción”) que se regirá por lo
+            “Promo Liso” (en adelante la “Promoción”) que se regirá por lo
             establecido en estas bases y condiciones (en adelante las “Bases”)
             copia de las cuales podrán consultarse en el siguiente link:
-            www.lisosantafesino.com.ar
+            www.sabordetierradecerveceros.com.ar
           </p>
         </div>
         <div className="pt-5 pb-5">
@@ -33,15 +33,18 @@ export const Laws = () => {
           <h2 className="num-law">3.</h2>
           <p>
             <strong>Validez y Vigencia:</strong> La Promoción será válida
-            exclusivamente en la Ciudad de Santa Fe y Santo Tomé, Provincia de
-            Santa Fe, Argentina (en adelante el “Territorio”), y tendrá vigencia
-            desde las 00:00 horas del 4 de diciembre de 2023 hasta las 23.59 del
-            21 de diciembre de 2023 (en adelante el “Plazo de Vigencia” y
-            resultará aplicable única y exclusivamente los días lunes, martes,
-            miércoles y jueves en el horario de 19:00 hs a 21:30hs durante el
-            Plazo de Vigencia. Este Plazo de Vigencia es improrrogable, no
-            aceptándose en consecuencia participaciones posteriores a la
-            finalización del Plazo de Vigencia de la Promoción.
+            exclusivamente en la Ciudad de Santa Fe, Provincia de Santa Fe,
+            Argentina (en adelante el “Territorio”), y tendrá vigencia desde las
+            00:00 horas del{" "}
+            <strong>
+              1 de febrero de 2025 hasta las 23.59 del 31 de marzo de 2025
+            </strong>{" "}
+            (en adelante el “Plazo de Vigencia” y resultará aplicable única y
+            exclusivamente los días lunes, martes, miércoles y jueves en el
+            horario de 19:00 hs a 21:30hs durante el Plazo de Vigencia. Este
+            Plazo de Vigencia es improrrogable, no aceptándose en consecuencia
+            participaciones posteriores a la finalización del Plazo de Vigencia
+            de la Promoción.
           </p>
         </div>
         <div className="pt-5 pb-5">
@@ -57,9 +60,9 @@ export const Laws = () => {
         <div className="pt-5 pb-5">
           <h2 className="num-law"> 5.</h2>
           <p>
-            5. Cada Participante sólo podrá participar una vez por día durante
-            del Plazo de Vigencia, no aceptándose la participación bajo nombres
-            o datos falsos. Está prohibido y será anulado cualquier intento o
+            Cada Participante sólo podrá participar una vez por día durante del
+            Plazo de Vigencia, no aceptándose la participación bajo nombres o
+            datos falsos. Está prohibido y será anulado cualquier intento o
             método de participación que se realice por cualquier proceso,
             técnica o mecánica de participación distinta a la detallada en estas
             Bases. La utilización de técnicas de naturaleza robótica,
@@ -87,9 +90,9 @@ export const Laws = () => {
             Anexo I de las presentes Bases (en adelante el “Punto de Venta
             Adherido” o “los Puntos de Venta Adheridos” según corresponda) que
             dirigirá a los Participantes al link:
-            http://www.lisosantafesino.com.ar/ (la “Landing”); (ii) Registrar de
-            forma manual los datos personales allí requeridos y seleccionar el
-            Punto de Venta Adherido en el que se encuentre presente para
+            www.sabordetierradecerveceros.com.ar (la “Landing”); (ii) Registrar
+            de forma manual los datos personales allí requeridos y seleccionar
+            el Punto de Venta Adherido en el que se encuentre presente para
             participar en la Promoción (en adelante los “Datos Personales”);
             (iii) solicitar a algún trabajador del Punto de Venta Adherido en el
             que se encuentra presente para la obtención del Beneficio que valide
@@ -124,7 +127,7 @@ export const Laws = () => {
             <strong>El Beneficio:</strong> Los Participantes que hubieran
             cumplido con todos y cada uno de los requisitos establecidos en las
             presentes Bases recibirán un (1) un código canjeable por una
-            promoción de 5x3 cervezas calibre 250cc para su consumo en el Punto
+            promoción de 4x3 cervezas calibre 250cc para su consumo en el Punto
             de Venta Adherido, es decir, la entrega de dos (2) cervezas sin
             cargo con la compra de tres (3) (en adelante el “Beneficio” según
             corresponda). El Beneficio podrá ser usado exclusivamente el día en
@@ -147,14 +150,13 @@ export const Laws = () => {
         <div className="pt-5 pb-5">
           <h2 className="num-law"> 11.</h2>
           <p>
-            <strong>Alcance del Beneficio:</strong> El Beneficio no incluye otro
-            bien, prestación o servicio adicional no enumerado en estas Bases.
-            Los Participantes, no podrán negociar ni exigir un bien distinto al
-            indicado, ni por su valor en dinero. Los Beneficios son
-            intransferibles y no incluyen ninguna prestación, pago, bien o
-            servicio distinto de los indicados en estas Bases y los
-            Participantes no podrán solicitar su sustitución por otros bienes o
-            servicios.
+            <strong>Alcance del Beneficio:</strong> Todo impuesto, tasa o
+            contribución que deba tributarse, toda suma de dinero que deba
+            pagarse al estado nacional, sociedades del estado, provincias o
+            municipalidades por el hecho del ofrecimiento, asignación o entrega
+            del Código de Descuento o con motivo de la organización o difusión
+            de la Promoción será a su exclusivo cargo, a excepción de los
+            expresamente asumidos por el Organizador en estas Bases.
           </p>
         </div>
         <div className="pt-5 pb-5">
@@ -173,7 +175,7 @@ export const Laws = () => {
           <h2 className="num-law"> 13.</h2>
           <p>
             <strong>Uso de datos:</strong> Consulte nuestra Política de
-            Privacidad en https://www.ccu.com.ar/politica- de-privacidad/ para
+            Privacidad en https://www.ccu.com.ar/politica-de-privacidad/ para
             obtener información sobre cómo recopilamos, utilizamos y compartimos
             sus datos personales.
           </p>
@@ -223,14 +225,14 @@ export const Laws = () => {
           <h2 className="num-law"> 15.</h2>
           <p>
             <strong>Difusión:</strong> La Promoción será difundida mediante
-            material publicitario exhibido en los Puntos de Venta Adheridos, y
-            publicidad digital, via pública, radio y TV.
+            material publicitario exhibido en los Puntos de Venta Adheridos y
+            publicidad digital.
           </p>
         </div>
         <div className="pt-5 pb-5">
           <h2 className="num-law"> 16.</h2>
           <p>
-            <strong>Fuero y Competencia:</strong> Para cualquier cuestión
+            <strong>Fuero y Competencia:</strong>Para cualquier cuestión
             judicial que pudiera derivarse de la realización de la Promoción,
             los Participantes y el Organizador se someterán a la jurisdicción de
             los Tribunales Ordinarios en lo Comercial con asiento en la Ciudad

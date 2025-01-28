@@ -87,9 +87,14 @@
   }
 }
 
-@media (max-width: 500px) {
+@media (max-width: 480px) {
   .custom-section-home {
     flex-direction: column;
+  }
+
+  .custom-section-home div {
+    padding: 10px 0;
+    gap: 20px;
   }
 
   .cont-titles-section-home ul {

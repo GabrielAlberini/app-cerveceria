@@ -8,6 +8,7 @@ const Home = () => {
   return (
     <Layout>
       <Banner urlImage={"./banner.png"} />
+      <section className="back-custom"></section>
       <section className="custom-section-home">
         <div className="cont-titles-section-home">
           <ul>
