@@ -10,8 +10,8 @@
 
 @media (max-width: 480px) {
   .custom-hero-background {
-    background-size: contain;
+    background-size: cover;
     min-height: 100px;
-    padding-top: 250px;
+    padding: 40px;
   }
 }
