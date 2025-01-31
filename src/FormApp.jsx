@@ -239,11 +239,23 @@ const FormApp = () => {
     <div className="column is-half is-flex is-justify-content-center">
       <div className="box has-background-white-bis has-shadow p-5">
         {showAlert && <AlertMessage message={alertMessage} type={alertType} />}
-        <Form
-          estado={estado}
-          handleChange={handleChange}
-          handleSubmit={handleSubmit}
-        />
+        {estado.isFormAvailable ? (
+          estado.codigoGenerado ? (
+            <Coupon
+              estado={estado}
+              handleDownload={handleDownload}
+              handleCodigoValidado={handleCodigoValidado}
+            />
+          ) : (
+            <Form
+              estado={estado}
+              handleChange={handleChange}
+              handleSubmit={handleSubmit}
+            />
+          )
+        ) : (
+          <NotificacionDisponibilidad />
+        )}
       </div>
     </div>
   );
