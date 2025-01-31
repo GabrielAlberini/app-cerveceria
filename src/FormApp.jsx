@@ -126,7 +126,7 @@ const FormApp = () => {
         mesNacimiento: estado.formulario.mesNacimiento,
         anoNacimiento: estado.formulario.anoNacimiento,
         seleccionBar: estado.formulario.seleccionBar,
-        horaGeneracion: fechaGeneracion.toLocaleTimeString(),
+        horaGeneracion: fechaGeneracion.toLocaleString(),
         codigoGenerado: nuevoCodigo,
       };
 
@@ -239,23 +239,11 @@ const FormApp = () => {
     <div className="column is-half is-flex is-justify-content-center">
       <div className="box has-background-white-bis has-shadow p-5">
         {showAlert && <AlertMessage message={alertMessage} type={alertType} />}
-        {estado.isFormAvailable ? (
-          estado.codigoGenerado ? (
-            <Coupon
-              estado={estado}
-              handleDownload={handleDownload}
-              handleCodigoValidado={handleCodigoValidado}
-            />
-          ) : (
-            <Form
-              estado={estado}
-              handleChange={handleChange}
-              handleSubmit={handleSubmit}
-            />
-          )
-        ) : (
-          <NotificacionDisponibilidad />
-        )}
+        <Form
+          estado={estado}
+          handleChange={handleChange}
+          handleSubmit={handleSubmit}
+        />
       </div>
     </div>
   );
